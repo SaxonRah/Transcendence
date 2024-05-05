@@ -9,7 +9,7 @@ A `transsembler` is a word similar to a `transpiler`. A `transpiler` will transl
 # About
 Provided is a comprehensive(?) list of regex patterns in python that should cover a wide variety of Intel 8080 code. A full complete list is impractical for the first go around, however I made a large attempt at both the instructions and assembler commands.
 
-There is currently no M0Plus(m0+) translation code. This is being worked on.
+There is currently no M0+ (ARMv6-M) translation code. This is being worked on.
 
 # What the .... Why?!
 I would like to see how feasable it is to create a `transsembler`. I choose the Intel 8080 and M0+ (RP2040) for a few reasons. Intel 8080 is a 8-bit CISC microprocessor. Intel 8080 is little-endian. The Cortex-M0+ is a 32-bit RISC microprocessor. M0+ can be either little-endian or big-endian. The targeted RP2040 is little-endian. 
