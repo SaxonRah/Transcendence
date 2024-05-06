@@ -2,7 +2,9 @@
 
 Translate or rather `transsemble` Intel 8080 Assembly to Cortex-M0+ Assembly. This `transsembler` will target a RPi RP2040 (M0+/ARMv6-M) from Intel 8080 assembly. This `transsembler` will also `transsemble` the PL/M language into M0+/ARMv6-M assembly.
 
-There is currently no M0+ (ARMv6-M) translation code. This is being worked on. If you would like to contribute, don't hesitate, clone and go!
+Currently I'm designing and testing the PL/M translation to M0+/ARMv6-M. Right now `PLM_Patterns.py` and `PLM_Pattern_Matching.py` will match any and all lines from the example_asm/cpm22.ASM
+
+There is currently no M0+ (ARMv6-M) translation code. This is being designed. If you would like to contribute, don't hesitate, clone and go!
 
 # Transsembler
 
