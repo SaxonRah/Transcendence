@@ -2,9 +2,15 @@
 
 Translate or rather `transsemble` Intel 8080 Assembly to Cortex-M0+ Assembly. This `transsembler` will target a RPi RP2040 (M0+/ARMv6-M) from Intel 8080 assembly. This `transsembler` will also `transsemble` the PL/M language into M0+/ARMv6-M assembly.
 
-Currently I'm designing and testing the PL/M translation to M0+/ARMv6-M. Right now `PLM_Patterns.py` and `PLM_Pattern_Matching.py` will match any and all lines from the example_asm/cpm22.ASM
+Currently I'm designing and testing the PL/M translation to M0+/ARMv6-M. Right now `PLM_Patterns.py` and `PLM_Pattern_Matching.py` will match any and all lines from `example_asm/cpm22.ASM`
 
-There is currently no M0+ (ARMv6-M) translation code. This is being designed. If you would like to contribute, don't hesitate, clone and go!
+Now the translation layer should be far less hard since the entirety of CP/M 2.2 is pattern matched. Pattern matching PL/M was probably the hardest part. Since there isn't a modern PL/M compiler or exposed PL/M compiler source to dissect.
+
+Parsing the regex matches and constructing an AST should be trivial with given regexes with something like LEX and YACC. PLY or SLY would be good choices.
+
+The translation from PL/M to ARMv6-M should be quite easy if you know enough ARMv6-M. There is currently no M0+ (ARMv6-M) translation code. This is currently being designed as you could skin this cat many ways, I'm really trying to design something worth while here.
+
+If you would like to contribute, don't hesitate, clone and go!
 
 # Transsembler
 
@@ -16,9 +22,9 @@ Provided is a comprehensive(?) list of regex patterns in python that should cove
 
 # What the .... Why?!
 
-I would like to see how feasable it is to create a `transsembler`. I choose the Intel 8080 and M0+ (RP2040) for a few reasons. Intel 8080 is a 8-bit CISC microprocessor. Intel 8080 is little-endian. The Cortex-M0+ is a 32-bit RISC microprocessor. M0+ can be either little-endian or big-endian. The targeted RP2040 is little-endian. 
+I would like to see how feasable it is to create a `transsembler`. I choose the Intel 8080 and M0+ (RP2040) for a few reasons. Intel 8080 is a 8-bit CISC microprocessor and is little-endian. The Cortex-M0+ is a 32-bit RISC microprocessor and can be either little-endian or big-endian. The targeted RP2040 is little-endian. 
 
-1. Both the RP2040 and I8080 are Von Neumann architecture. Architecture, bit-width encapsulation, and endian-ness are the main reasons. It's a good match since the M0+ can more than reliably capture the essence of an I8080. The RP2040 is more like complete over-kill in comparison to the I8080.
+1. Both the RP2040 and I8080 are Von Neumann architecture. Architecture, bit-width encapsulation, and endian-ness are the main reasons. It's a good match since the M0+ can more than reliably capture the essence of any I8080 code. The RP2040 is more like complete over-kill in comparison to the I8080.
 
 2. Direct CISC to RISC `transsembly` is a complelling problem to solve and persue. `Transsemmbly` between the two will require a good `transsembler`. Which means lots of neat tricks like instruction look-ahead are needed. 
 
