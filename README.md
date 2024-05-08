@@ -6,7 +6,8 @@ Transcendence is a translation tool designed to convert Intel 8080 assembly lang
 
 ## Specification
 Current specification is located here -> [Handling Differences a Specification](Handling_Differences_Specification.md)
-- Note: The specification and playground code are NOT 1 to 1. The playground drives the development of a better specification.
+- Note: The specification and playground code are NOT 1 to 1.
+   - The playground drives the development of a better specification.
 
 ## Playground
 You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder. This is where I try out ideas and work on designing the specification and development of Transcendence.
