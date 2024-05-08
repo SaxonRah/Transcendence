@@ -1,4 +1,4 @@
-# I8080_to_M0Plus Transsembler
+# Transcendence a Intel 8080 to M0Plus Transsembler
 
 Translate or rather `transsemble` Intel 8080 Assembly to Cortex-M0+ Assembly. This `transsembler` will target a RPi RP2040 (M0+/ARMv6-M) from Intel 8080 assembly. This `transsembler` will also `transsemble` the PL/M language into M0+/ARMv6-M assembly.
 
