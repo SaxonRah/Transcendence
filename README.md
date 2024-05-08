@@ -1,4 +1,4 @@
-# Transcendence: Intel 8080 to Arm M0+ Translation Tool
+# Transcendence - An Intel 8080 & PL/M to Arm M0+ Translation Tool.
 
 ## Overview
 Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments.
@@ -8,6 +8,9 @@ Current specification is located here -> [Handling Differences a Specification](
 
 ## Playground
 You will find Intel 8080 assembly and PL/M regex patterns and subsequent pattern matching in the playground folder. This is where I try out ideas and work on design and developing the tool.
+
+- Currently CP/M 2.2 in PL/M is completely pattern matched and has a complete set of regexes.
+- Intel 8080 assembly has a complete set of regexes.
 
 ## Releases
 None yet.
