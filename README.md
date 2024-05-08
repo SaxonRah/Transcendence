@@ -1,33 +1,42 @@
-# Transcendence - Intel 8080 to M0Plus Transsembler
+# Transcendence: Intel 8080 to Arm M0+ Translation Tool
 
-Translate or rather `transsemble` Intel 8080 Assembly to Cortex-M0+ Assembly. This `transsembler` will target a RPi RP2040 (M0+/ARMv6-M) from Intel 8080 assembly. This `transsembler` will also `transsemble` the PL/M language into M0+/ARMv6-M assembly.
+## Overview
+Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments.
 
-Currently I'm designing and testing the PL/M translation to M0+/ARMv6-M. Right now `PLM_Patterns.py` and `PLM_Pattern_Matching.py` will match any and all lines from `example_asm/cpm22.ASM`
+## Motivation
+Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems.
 
-Now the translation layer should be far less hard since the entirety of CP/M 2.2 is pattern matched. Pattern matching PL/M was probably the hardest part. Since there isn't a modern PL/M compiler or exposed PL/M compiler source to dissect.
+## Features
+1. **Translation from Intel 8080 Assembly to Arm M0+ Assembly:**
+   - Convert Intel 8080 assembly language instructions to equivalent Arm M0+ assembly instructions.
+   - Handle differences in instruction formats, addressing modes, and operand types between the two architectures.
+   - Ensure efficient translation to leverage the capabilities of the Arm M0+ processor.
+   
+2. **Transpilation of PL/M Code to Arm M0+ Assembly:**
+   - Translate PL/M language constructs into Arm M0+ assembly language.
+   - Support a wide range of PL/M syntax and constructs, including control structures, data types, and procedures.
+   - Ensure compatibility with CP/M operating system requirements and other legacy systems.
 
-Parsing the regex matches and constructing an AST should be trivial with given regexes with something like LEX and YACC. PLY or SLY would be good choices.
+3. **Pattern Matching and Parsing:**
+   - Utilize regular expressions for pattern matching Intel 8080 assembly and PL/M language constructs.
+   - Parse matched patterns to construct an Abstract Syntax Tree (AST) for subsequent translation.
+   - Employ tools like LEX and YACC, or alternatives like PLY or SLY, for efficient parsing and AST generation.
 
-The translation from PL/M to ARMv6-M should be quite easy if you know enough ARMv6-M. There is currently no M0+ (ARMv6-M) translation code. This is currently being designed as you could skin this cat many ways, I'm really trying to design something worth while here.
+4. **Optimization and Code Generation:**
+   - Implement optimizations to improve the efficiency and performance of translated code.
+   - Generate optimized Arm M0+ assembly code with consideration for resource constraints and execution speed.
+   - Employ techniques such as instruction look-ahead for enhancing translation accuracy and performance.
 
-If you would like to contribute, don't hesitate, clone and go!
+5. **Modularity and Extensibility:**
+   - Design Transcendence with a modular architecture to facilitate future enhancements and additions.
+   - Allow for easy integration of new translation rules, optimizations, and target architectures.
+   - Support multiple input and output formats to accommodate diverse usage scenarios.
 
-# Transsembler
+## Target Platform
+Transcendence primarily targets the Raspberry Pi RP2040, which features the Arm Cortex-M0+ processor. The tool is optimized for the little-endian architecture of the RP2040, ensuring compatibility with its execution environment.
 
-A `transsembler` is like a `transpiler`. A `transpiler` will translate code from a high-level language to another high-level language. A `transsembler` will translate assembly language to a different targeted assembly language. You can call this a `transpiler` if you wanted, as it isn't an a(ssembler) as the word suggests. Both words are badly coined.
+## Contribution
+Contributions to Transcendence are welcome and encouraged. Interested developers can clone the project repository. Contribute enhancements. Bug fixes. Aditional translation capabilities. Collaboration and feedback are essential for improving the tool.
 
-# About
-
-Provided is a comprehensive(?) list of regex patterns in python that should cover a wide variety of Intel 8080 code. A good test here would be I8080 code from Rosetta Code. I've added a majority of PL/M regexes in python as well. Combined with I8080 assembly regexes, it should help cover a majority of I8080 code bases. CP/M in PL/M would be a good test here. It should be noted other PL/M code for other microprocessors could be used; for example the Z80. A full complete list of regexes for both I8080 assembly and PL/M language is impractical for the first go around. However, I made a large attempt at both the I8080 and a majority of the PL/M language. Both should have sufficent regexes to pattern match a large majority of I8080 assembly and PL/M.
-
-# What the .... Why?!
-
-I would like to see how feasable it is to create a `transsembler`. I choose the Intel 8080 and M0+ (RP2040) for a few reasons. Intel 8080 is a 8-bit CISC microprocessor and is little-endian. The Cortex-M0+ is a 32-bit RISC microprocessor and can be either little-endian or big-endian. The targeted RP2040 is little-endian. 
-
-1. Both the RP2040 and I8080 are Von Neumann architecture. Architecture, bit-width encapsulation, and endian-ness are the main reasons. It's a good match since the M0+ can more than reliably capture the essence of any I8080 code. The RP2040 is more like complete over-kill in comparison to the I8080.
-
-2. Direct CISC to RISC `transsembly` is a complelling problem to solve and persue. `Transsemmbly` between the two will require a good `transsembler`. Which means lots of neat tricks like instruction look-ahead are needed. 
-
-3. The RP2040 is very much like the I8080 in terms of homebrew and vintage clone computing usage. Take for example RunCPM or the 6502 and Z80 emulators on the RP2040. By directly translating assembly it prompts interesting further questions.
-
-4. `Transsembling` or `Transpiling` PL/M code into M0+(ARMv6-M) will provide a wide range of software for testing the `transsembler`. Which if completed would be very useful to interfacing with older systems that would require CP/M operating system or other systems.
+## Conclusion
+Transcendence aims to bridge the gap between legacy Intel 8080 and PL/M codebases and modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.
