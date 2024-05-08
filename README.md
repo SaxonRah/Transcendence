@@ -3,10 +3,16 @@
 ## Overview
 Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments.
 
-## Motivation
-Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems.
+## Specification
+Current specification is located here -> [Handling Differences a Specification](Handling_Differences_Specification.md)
 
-## Features
+## Playground
+You will find Intel 8080 assembly and PL/M regex patterns and subsequent pattern matching in the playground folder. This is where I try out ideas and work on design and developing the tool.
+
+## Releases
+None yet.
+
+## Features Desired
 1. **Translation from Intel 8080 Assembly to Arm M0+ Assembly:**
    - Convert Intel 8080 assembly language instructions to equivalent Arm M0+ assembly instructions.
    - Handle differences in instruction formats, addressing modes, and operand types between the two architectures.
@@ -31,6 +37,9 @@ Transcendence addresses the challenge of translating code between architectures 
    - Design Transcendence with a modular architecture to facilitate future enhancements and additions.
    - Allow for easy integration of new translation rules, optimizations, and target architectures.
    - Support multiple input and output formats to accommodate diverse usage scenarios.
+
+## Motivation
+Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems.
 
 ## Target Platform
 Transcendence primarily targets the Raspberry Pi RP2040, which features the Arm Cortex-M0+ processor. The tool is optimized for the little-endian architecture of the RP2040, ensuring compatibility with its execution environment.
