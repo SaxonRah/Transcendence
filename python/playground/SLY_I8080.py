@@ -10,7 +10,10 @@ class I8080Lexer(Lexer):
     ignore_comment = r';.*'
 
     LABEL = r'\w+:'
-    INSTRUCTION = r'(MOV|ADD|SUB)'  # Define all instructions
+      
+    INSTRUCTION = \
+        r'(MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT)'
+    
     REGISTER = r'[A-HL]|M'
     IMMEDIATE_DATA = r'(0[xX][0-9A-Fa-f]+|\d+)[Hh]?'
     MEMORY_ADDRESS = r'\w+'
