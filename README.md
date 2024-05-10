@@ -34,11 +34,15 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
    - Looking for more PL/M code to test.
 - Intel 8080 assembly has a complete set of regexes.
    - Looking for more I8080 assembly to test.
-
 - I've added the files that guided me to create the [Handling Differences Specification](/specification/Handling_Differences_Specification.md).
    - [I8080_M0Plus_Mappings.py](/python/playground/maps/I8080_M0Plus_Mappings.py)
    - [Translate_I8080_to_M0Plus.py](/python/playground/Translate_I8080_to_M0Plus.py)
       - 🐲🐉 These are not great or even good. These are what drove me to create a specification. 🐉🐲
+- Added SLY lexer and parser for I8080
+   - [SLY_I8080.py](https://github.com/SaxonRah/Transcendence/python/playground/SLY_I8080.py)
+      - 🐲🐉 This is okay, but not great. 🐉🐲
+      - Would be able to use already generated regexes in playground.
+      - Allows for highly simplistic Abstract Syntax Tree construction.
 
 ## Features Desired
 1. **Translation from Intel 8080 Assembly to Arm M0+ Assembly:**
