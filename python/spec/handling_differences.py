@@ -58,27 +58,51 @@ def addressing():
 
 def operands():
     # Define operand type mappings between Intel 8080 and Arm M0+
-    operand_type_mapping = {
-        'BYTE': {'arm_type': 'BYTE', 'size_bits': 8},  # Byte operand remains the same
-        'WORD': {'arm_type': 'WORD', 'size_bits': 16},  # Word operand remains the same
-        # More mappings...
+    operand_mapping = {
+        'Register': {
+            'A': 'R0', 'B': 'R1', 'C': 'R2', 'D': 'R3', 'E': 'R4',
+            'H': 'R5', 'L': 'R6', 'M': 'R7',  # 'M' represents memory location pointed to by HL
+            # Additional mappings...
+        },
+        'Register Pair': {
+            'B': 'R1R2', 'D': 'R3R4', 'H': 'R5R6',  # Register pairs BC, DE, HL
+            # Additional mappings...
+        },
+        'Immediate Data': {
+            'Hexadecimal': {'arm_type': 'HEX', 'size_bits': 8},  # Example: Immediate data in hexadecimal format
+            'Decimal': {'arm_type': 'DEC', 'size_bits': 8},      # Immediate data in decimal format
+            'Octal': {'arm_type': 'OCT', 'size_bits': 8},        # Immediate data in octal format
+            'Binary': {'arm_type': 'BIN', 'size_bits': 8},       # Immediate data in binary format
+            # Additional mappings...
+        },
+        '16-bit Memory Address': {
+            # Define mappings for addressing modes or specify how memory addresses are represented in Arm M0+ assembly
+            # Example: 'LABEL' in Intel 8080 can be translated to 'LABEL' or its corresponding memory address in Arm M0+
+            # Additional mappings...
+        }
     }
-
-    # Translate operand type from Intel 8080 to Arm M0+
-    def translate_operand_type(intel_type):
-        mapping = operand_type_mapping.get(intel_type, None)
-        if mapping:
-            return mapping['arm_type'], mapping['size_bits']
+    
+    # Translate operand from Intel 8080 to Arm M0+
+    def translate_operand(intel_operand_type, intel_operand_value):
+        if intel_operand_type in operand_mapping:
+            mappings = operand_mapping[intel_operand_type]
+            if intel_operand_value in mappings:
+                return mappings[intel_operand_value]
+            else:
+                # Handle cases like expressions, labels, or other custom operand types
+                # Example: Evaluate expressions, resolve labels, or apply custom translation rules
+                # Additional logic...
+                return None
         else:
-            return None, None
-
+            # Handle unsupported operand types or invalid values
+            # Additional logic...
+            return None
+    
     # Example usage
-    intel_type = 'BYTE'
-    arm_type, size_bits = translate_operand_type(intel_type)
-    print(f"Translated '{intel_type}' to '{arm_type}' with a size of {size_bits} bits")
-    intel_type = 'WORD'
-    arm_type, size_bits = translate_operand_type(intel_type)
-    print(f"Translated '{intel_type}' to '{arm_type}' with a size of {size_bits} bits")
+    intel_operand_type = 'Immediate Data'
+    intel_operand_value = 'Hexadecimal'
+    arm_operand = translate_operand(intel_operand_type, intel_operand_value)
+    print(f"Translated '{intel_operand_value}' to '{arm_operand}'")
 
 
 def test_specification():
