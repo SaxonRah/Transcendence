@@ -1,5 +1,5 @@
 # Dual RP2040 and Dual Core Communication.
-## ! ! ! WORK IN PROGRESS ! ! ! HERE BE DRAGONS ! ! ! WORK IN PROGRESS ! ! ! 
+## ! ! ! WORK IN PROGRESS !🐲!🐉! HERE BE DRAGONS !🐉!🐲! WORK IN PROGRESS ! ! ! 
 
 ## Code breakdown for each RP2040 microcontroller:
 1. ### RP2040 #1:
