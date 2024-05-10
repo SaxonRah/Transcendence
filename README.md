@@ -1,6 +1,10 @@
 # Transcendence
 ## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
 ![](https://github.com/SaxonRah/Transcendence/blob/main/imgs/Transcendence.gif)
+
+*__One day I'd like to see a tool that could translate 8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA.__*
+
+*__This is the starting point of that dream.__*
 ## Overview
 Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. 
 
@@ -63,7 +67,7 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
 ## Motivation
 Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems.
 
-One day I'd like to see a tool that could translate from (8080, 8085, 8086, 6502, Z80, M6800, M68000, 80186, 80286, 80386, 80486) to an ARM ISA. This is the starting point of that dream.
+One day I'd like to see a tool that could translate 8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA. This is the starting point of that dream.
 
 ## Target Platform
 Transcendence primarily targets the Raspberry Pi RP2040, which features the Arm Cortex-M0+ processor. The tool is optimized for the little-endian architecture of the RP2040, ensuring compatibility with its execution environment.
