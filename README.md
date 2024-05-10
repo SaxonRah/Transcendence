@@ -1,6 +1,5 @@
-# Transcendence
-## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
 ![](https://github.com/SaxonRah/Transcendence/blob/main/imgs/Transcendence.gif)
+## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
 
 *__One day I'd like to see a tool that could translate:__*
 
