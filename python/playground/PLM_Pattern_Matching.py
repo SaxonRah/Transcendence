@@ -1,6 +1,6 @@
 import re
 
-from PLM_Patterns import *
+from Patterns_PLM import *
 
 
 def match_plm_code(code):
