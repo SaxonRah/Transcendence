@@ -61,7 +61,9 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
    - Support multiple input and output formats to accommodate diverse usage scenarios.
 
 ## Motivation
-Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems. One day I'd like to see a tool that could translate from (8080, 8085, 8086, 6502, Z80, M6800, M68000, 80186, 80286, 80386, 80486) to an ARM ISA. This is the starting point of that dream.
+Transcendence addresses the challenge of translating code between architectures with differing instruction sets and design philosophies. By enabling the conversion of legacy Intel 8080 and PL/M code to Arm M0+ assembly, it facilitates the utilization of modern hardware while preserving compatibility with vintage systems.
+
+One day I'd like to see a tool that could translate from (8080, 8085, 8086, 6502, Z80, M6800, M68000, 80186, 80286, 80386, 80486) to an ARM ISA. This is the starting point of that dream.
 
 ## Target Platform
 Transcendence primarily targets the Raspberry Pi RP2040, which features the Arm Cortex-M0+ processor. The tool is optimized for the little-endian architecture of the RP2040, ensuring compatibility with its execution environment.
