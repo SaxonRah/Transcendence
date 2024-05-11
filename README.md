@@ -39,7 +39,7 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
    - [Translate_I8080_to_M0Plus.py](/python/playground/Translate_I8080_to_M0Plus.py)
       - 🐲🐉 These are not great or even good. These are what drove me to create a specification. 🐉🐲
 - Added SLY lexer and parser for I8080
-   - [SLY_I8080.py](https://github.com/SaxonRah/Transcendence/blob/main/python/playground/SLY_I8080.py)
+   - [SLY_I8080.py](/python/playground/SLY_I8080.py)
       - 🐲🐉 This is okay, but not great. 🐉🐲
       - Would be able to use already generated regexes in playground.
       - Allows for highly simplistic Abstract Syntax Tree construction.
