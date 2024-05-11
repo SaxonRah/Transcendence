@@ -1,10 +1,11 @@
 ![](https://github.com/SaxonRah/Transcendence/blob/main/imgs/Transcendence.gif)
+## What's in a name?
+Quite a bit, apparently. Transcendence is a backronym.  
+***T***echnique (for) ***R***etroactively ***A***dapting ***N***umerous ***S***ource ***C***ode ***E***xpressions (and) ***N***avigating ***D***iverse ***E***mbedded ***N***otation ***C***ontexts ***E***fficiently
+
 ## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
-
-*__One day I'd like to see a tool that could translate:__*
-
-*__8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA.__*
-
+*__One day I'd like to see a tool that could translate:__*  
+*__8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA.__*  
 *__This is the starting point of that dream.__*
 
 ## Overview
