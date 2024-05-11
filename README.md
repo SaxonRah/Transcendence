@@ -1,17 +1,16 @@
 ![](https://github.com/SaxonRah/Transcendence/blob/main/imgs/Transcendence.gif)
 ## What's in a name?
-Quite a bit, apparently. ***Transcendence*** is a backronym. <sup>It also has a meaning: The state of assembly code which **transcends** architectures. AKA ***Transcendence***.</sup>  
-<sup>***T***echnique (for) ***R***etroactively ***A***dapting ***N***umerous ***S***ource ***C***ode ***E***xpressions (and) ***N***avigating ***D***iverse ***E***mbedded ***N***otation ***C***ontexts ***E***fficiently</sup>
-
+Quite a bit, apparently.  
+***Transcendence*** is a backronym.  
+<sup>***T***echnique (for) ***R***etroactively ***A***dapting ***N***umerous ***S***ource ***C***ode ***E***xpressions (and) ***N***avigating ***D***iverse ***E***mbedded ***N***otation ***C***ontexts ***E***fficiently</sup>  
+<sup>It has a meaning aswell: The state of assembly code which **transcends** architectures. AKA ***Transcendence***.</sup>  
 ## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
 *__One day I'd like to see a tool that could translate:__*  
 *__8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA.__*  
 <sup>*__This is the starting point of that dream.__*</sup>
 
 ## Overview
-Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. 
-
-Transcendence aims to bridge the gap between legacy Intel 8080 and PL/M codebases and modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.
+Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. Transcendence aims to bridge the gap between legacy Intel 8080 and PL/M codebases and modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.  
 
 ## Specification
 Current specification is located here -> [Handling Differences a Specification](/specification/Handling_Differences_Specification.md)
