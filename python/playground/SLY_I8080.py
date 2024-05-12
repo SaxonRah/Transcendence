@@ -4,10 +4,9 @@ from sly import Lexer, Parser
 class I8080Lexer(Lexer):
 
     tokens = {
-        LABEL, INSTRUCTION,
-        COMMA, SPECIAL_CHARACTER,
+        LABEL, INSTRUCTION, COMMA,
         IMMEDIATE_DATA, MEMORY_ADDRESS, DECIMAL,
-        SINGLE_QUOTED_CHAR, MATH_EXPRESSION,
+        MATH_EXPRESSION,
     }
 
     ignore = ' \t\''
@@ -19,50 +18,22 @@ class I8080Lexer(Lexer):
     @_(r'\b\w+:')
     def LABEL(self, t):
         t.value = t.value.strip(':')
+        # TODO: create label dictionary for AST traversal after parsing is fixed.
         return t
 
+    # TODO: The - in MVI A,'-' is being picked up by MATH_EXPRESSION instead of IMMEDIATE_DATA.
 
-    INSTRUCTION = r'(EQU|ORG|MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT|PCHL|SPHL|XCHG|XTHL|DI|EI|NOP|RLC|RRC|RAL|RAR|STC|CMC|HLT|STAX|INX|MVI|PUSH|POP|RNZ|RP|RZ|CM|DAD|RC|CPI|LXI|RNC|CNZ|LHLD|DB|DCX|LDAX|DW)'
+    INSTRUCTION = r'(?<!\w)(EQU|ORG|MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT|PCHL|SPHL|XCHG|XTHL|DI|EI|NOP|RLC|RRC|RAL|RAR|STC|CMC|HLT|STAX|INX|MVI|PUSH|POP|RNZ|RP|RZ|CM|DAD|RC|CPI|LXI|RNC|CNZ|LHLD|DB|DCX|LDAX|DW)(?!\w)'
+
+    MEMORY_ADDRESS = r'(?![0-9])[A-Za-z_][A-Za-z0-9_]*(?!\w)'
+
+    IMMEDIATE_DATA = r'\b\-?([0-9a-fA-F]+H\b)|\b\d+(D?)(\.?(\d+)?(D?))\b|(\b[0-7]+[OQ])\b|\b([01]+B\b)|\$|\'[^\']*\'|\.'
 
     COMMA = r','
 
-    MATH_EXPRESSION = r'[+\-]'
-    #  MATH_EXPRESSION = r'[A-Za-z0-9_]+(?:[+\-][A-Za-z0-9_]+)*'
-
-    SINGLE_QUOTED_CHAR = r'\'([^\']*)\''
-
-
-    IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)\b'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)\b(?![\+\-\*\/\.\'])'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)(?![\+\-\*\/\.])'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)\b(?![\+\-\*\/\.])'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)\b(?![\+\-\*\/])'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)(?!\w)'
-    #  IMMEDIATE_DATA = r'-?\b(?:0x[0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[Hh])?)\b'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|[0-9]+(?:\.[0-9]+)?)(?:[Hh]|\b)'
-    #  IMMEDIATE_DATA = r'(-)?\b(?:0x[0-9A-Fa-f]+|[0-9]+(?:\.[0-9]+)?)(?:[Hh])?\b'
-    #  IMMEDIATE_DATA = r'(-)?([0-9]+)(.)?(?:0)?([Xx])?([0-9A-Fa-f]+)?([Hh])?'
-    #  IMMEDIATE_DATA = r'(?:0[Xx])?[0-9A-Fa-f]+[Hh]'
-
-    #  MEMORY_ADDRESS = r'\b(?![0-9])[A-Za-z_][A-Za-z0-9_]*(?!\w|[\+\-\*\/])\b'
-    MEMORY_ADDRESS = r'\b(?![0-9])[A-Za-z_][A-Za-z0-9_]*(?!\w|[\+\-\*\/])'
-
-    SPECIAL_CHARACTER = r'[\!\@\#\$\%\^\&\*\(\)\=\`\~\{\}\[\]\:\;\"\,\/\<\>\?\\\|]'
-    #  SPECIAL_CHARACTER = r'\'[\!\@\#\$\%\^\&\*\(\)\_\=\.\`\~\{\}\[\]\:\;\"\,\/\<\>\?\\\|]\''
-
     DECIMAL = r'(-)?(?:\d+\.\d+)'
 
-    '''
-    multiple regexes and data conversion
-    @_(r'0x[0-9a-fA-F]+',
-       r'\d+')
-    def NUMBER(self, t):
-        if t.value.startswith('0x'):
-            t.value = int(t.value[2:], 16)
-        else:
-            t.value = int(t.value)
-        return t
-    '''
+    MATH_EXPRESSION = r'[+\-]'
 
     @_(r'\n+')
     def ignore_newline(self, t):
@@ -98,7 +69,11 @@ class I8080Parser(Parser):
 
     @_('INSTRUCTION')
     def statement(self, p):
-        return [p[0]]
+        return [p.INSTRUCTION]
+
+    @_('INSTRUCTION operand')
+    def statement(self, p):
+        return [p.INSTRUCTION] + [p.operand]
 
     @_('INSTRUCTION operands')
     def statement(self, p):
@@ -110,11 +85,7 @@ class I8080Parser(Parser):
 
     @_('operands COMMA operand')
     def operands(self, p):
-        return [p.operands, p.COMMA, p.operand]
-
-    # @_('operands MATH operand')
-    # def operands(self, p):
-    #     return [p.operands, p.MATH, p.operand]
+        return [p.operands, p.operand]
 
     @_('MEMORY_ADDRESS COMMA operands')
     def operands(self, p):
@@ -124,29 +95,33 @@ class I8080Parser(Parser):
     def operands(self, p):
         return [p.DECIMAL] + p.operands
 
-    @_('IMMEDIATE_DATA')
-    def operand(self, p):
-        return [p.IMMEDIATE_DATA]
+    @_('expression COMMA operands')
+    def operands(self, p):
+        return [p.expression] + p.operands
 
     @_('MEMORY_ADDRESS')
     def operand(self, p):
-        return [p.MEMORY_ADDRESS]
+        return p.MEMORY_ADDRESS
 
-    @_('SPECIAL_CHARACTER')
+    @_('IMMEDIATE_DATA')
     def operand(self, p):
-        return [p.SPECIAL_CHARACTER]
+        return p.IMMEDIATE_DATA
 
     @_('DECIMAL')
     def operand(self, p):
-        return [p.DECIMAL]
+        return p.DECIMAL
 
-    @_('MATH_EXPRESSION')
+    @_('expression')
     def operand(self, p):
-        return [p.MATH_EXPRESSION]
+        return p.expression
 
-    @_('SINGLE_QUOTED_CHAR')
+    @_('MATH_EXPRESSION operand')
     def operand(self, p):
-        return [p.SINGLE_QUOTED_CHAR]
+        return (p.MATH_EXPRESSION, p.operand)
+
+    @_('operand MATH_EXPRESSION operand')
+    def expression(self, p):
+        return (p.operand0, p.MATH_EXPRESSION, p.operand1)
 
     def error(self, p):
         print(f"Syntax error at line: {p.lineno}")
@@ -177,23 +152,31 @@ def test_sly_parser(code):
     print("End Parsing")
 
 
-input_code = \
-    """ LABEL1: MOV A, B ;Inline comment
-        ADD M, 10H
-        ;Line comment
-        
-        LABEL2: SUB H, L
-        MOV C, M
-            
-        LABEL3: ADD A, 2050h
-        ADD A, 2050H
-        SUB B, 0x001A
-        MOV M, A
-        
-        LABEL4:     MOV 0FH, 0x00CH
-        DB 0,78H,80H,84H,88H,8AH,8CH,8EH,90H,91H,92H
-        DB 3C00H,   4170H, 4248H,       4900H
-        DW F16_1, F16_10,  5640H,   63D0H,    70D2H
+input_code = """ 
+LABEL1: MOV A, B ;Inline comment
+ADD M, 10H
+;Line comment
+LXI H,F16_1+1
+
+LABEL2: SUB H, L
+MOV C, M
+STAX D
+MVI A,'-'
+CALL CHR
+MVI A,'$'
+MVI A,$
+
+LABEL3: ADD A, FFFFH
+ADD A, 9999D
+ADD A, 0000
+SUB B, 0000O
+SUB B, 7777Q
+MOV M, A
+
+LABEL4:     MOV 0FH, 000CH
+DB 0,78H,80H,84H,88H,8AH,8CH,8EH,90H,91H,92H
+DB 3C00H,   4170H, 4248H,       4900H
+DW F16_1, F16_10,  5640H,   63D0H,    70D2H
         """
 
 test_sly_lexer(input_code)
