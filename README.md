@@ -22,11 +22,6 @@ Current specification is located here -> [Handling Differences a Specification](
    - This is now the same as [Handling Differences Specification](/specification/Handling_Differences_Specification.md).
    - Going forward, I will make an effort to follow this. The current playground doesn't follow this.
 
-- [Dual RP2040's with Dual Core usage using Mailbox and UART](/specification/DualRP2040_DualCore_Mailbox.md)
-   - 🐲🐉 Just for fun. Never assembled it. It probably has errors and won't work. 🐉🐲
-   - Just wanted to write it before I forgot about wanting to try it.
-   - Think of this as a little bonus M0+ assembly application. 😙
-
 ## Playground
 You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder. This is where I try out ideas and work on designing the specification and development of Transcendence.
 
