@@ -36,8 +36,11 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
 - Added SLY lexer and parser for I8080
    - [SLY_I8080.py](/python/playground/SLY_I8080.py)
       - 🐲🐉 This is okay, but not great. 🐉🐲
-      - Would be able to use already generated regexes in playground.
       - Allows for highly simplistic Abstract Syntax Tree construction.
+      - 🔪 🐲 🐉 Major Update: 8080 SLY lexer and parser. 🐉 🐲 🔪  
+      - Almost slain the lexing and parsing dragons.
+      - The 8080_fp16.ASM almost lexes and parses in it's entirety.
+      - This is a big step, as then I can focus on actually translating the AST into ARMv6-M ISA.
 
 ## Features Desired
 1. **Translation from Intel 8080 Assembly to Arm M0+ Assembly:**
