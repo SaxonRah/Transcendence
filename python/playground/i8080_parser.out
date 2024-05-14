@@ -1,0 +1,668 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> statement
+Rule 2     program -> program statement
+Rule 3     statement -> INSTRUCTION operands
+Rule 4     statement -> INSTRUCTION operand
+Rule 5     statement -> INSTRUCTION
+Rule 6     statement -> LABEL statement
+Rule 7     statement -> LABEL
+Rule 8     operands -> expression COMMA operands
+Rule 9     operands -> DECIMAL COMMA operands
+Rule 10    operands -> MEMORY_ADDRESS COMMA operands
+Rule 11    operands -> operands COMMA operand
+Rule 12    operands -> operand
+Rule 13    operand -> MATH_EXPRESSION operand
+Rule 14    operand -> expression
+Rule 15    operand -> BINARY
+Rule 16    operand -> OCTAL
+Rule 17    operand -> DECIMAL
+Rule 18    operand -> HEX
+Rule 19    operand -> QUOTED_CHARACTER
+Rule 20    operand -> MEMORY_ADDRESS
+Rule 21    expression -> operand MATH_EXPRESSION operand
+Rule 22    expression -> operand MATH_EXPRESSION operands
+Rule 23    expression -> MATH_EXPRESSION
+
+Terminals, with rules where they appear:
+
+BINARY               : 15
+COMMA                : 8 9 10 11
+DECIMAL              : 9 17
+HEX                  : 18
+INSTRUCTION          : 3 4 5
+LABEL                : 6 7
+MATH_EXPRESSION      : 13 21 22 23
+MEMORY_ADDRESS       : 10 20
+OCTAL                : 16
+QUOTED_CHARACTER     : 19
+error                : 
+
+Nonterminals, with rules where they appear:
+
+expression           : 8 14
+operand              : 4 11 12 13 21 21 22
+operands             : 3 8 9 10 11 22
+program              : 2 0
+statement            : 1 2 6
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . INSTRUCTION operands
+    (4) statement -> . INSTRUCTION operand
+    (5) statement -> . INSTRUCTION
+    (6) statement -> . LABEL statement
+    (7) statement -> . LABEL
+    INSTRUCTION     shift and go to state 3
+    LABEL           shift and go to state 4
+
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+    (2) program -> program . statement
+    (3) statement -> . INSTRUCTION operands
+    (4) statement -> . INSTRUCTION operand
+    (5) statement -> . INSTRUCTION
+    (6) statement -> . LABEL statement
+    (7) statement -> . LABEL
+    INSTRUCTION     shift and go to state 3
+    LABEL           shift and go to state 4
+
+    statement                      shift and go to state 5
+
+state 2
+
+    (1) program -> statement .
+    INSTRUCTION     reduce using rule 1 (program -> statement .)
+    LABEL           reduce using rule 1 (program -> statement .)
+    $end            reduce using rule 1 (program -> statement .)
+
+
+state 3
+
+    (3) statement -> INSTRUCTION . operands
+    (4) statement -> INSTRUCTION . operand
+    (5) statement -> INSTRUCTION .
+    (8) operands -> . expression COMMA operands
+    (9) operands -> . DECIMAL COMMA operands
+    (10) operands -> . MEMORY_ADDRESS COMMA operands
+    (11) operands -> . operands COMMA operand
+    (12) operands -> . operand
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    INSTRUCTION     reduce using rule 5 (statement -> INSTRUCTION .)
+    LABEL           reduce using rule 5 (statement -> INSTRUCTION .)
+    $end            reduce using rule 5 (statement -> INSTRUCTION .)
+    DECIMAL         shift and go to state 9
+    MEMORY_ADDRESS  shift and go to state 10
+    MATH_EXPRESSION shift and go to state 11
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+
+    operands                       shift and go to state 6
+    operand                        shift and go to state 7
+    expression                     shift and go to state 8
+
+state 4
+
+    (6) statement -> LABEL . statement
+    (7) statement -> LABEL .
+    (3) statement -> . INSTRUCTION operands
+    (4) statement -> . INSTRUCTION operand
+    (5) statement -> . INSTRUCTION
+    (6) statement -> . LABEL statement
+    (7) statement -> . LABEL
+  ! shift/reduce conflict for INSTRUCTION resolved as shift
+  ! shift/reduce conflict for LABEL resolved as shift
+    $end            reduce using rule 7 (statement -> LABEL .)
+    INSTRUCTION     shift and go to state 3
+    LABEL           shift and go to state 4
+
+    statement                      shift and go to state 16
+
+state 5
+
+    (2) program -> program statement .
+    INSTRUCTION     reduce using rule 2 (program -> program statement .)
+    LABEL           reduce using rule 2 (program -> program statement .)
+    $end            reduce using rule 2 (program -> program statement .)
+
+
+state 6
+
+    (3) statement -> INSTRUCTION operands .
+    (11) operands -> operands . COMMA operand
+    INSTRUCTION     reduce using rule 3 (statement -> INSTRUCTION operands .)
+    LABEL           reduce using rule 3 (statement -> INSTRUCTION operands .)
+    $end            reduce using rule 3 (statement -> INSTRUCTION operands .)
+    COMMA           shift and go to state 17
+
+
+state 7
+
+    (4) statement -> INSTRUCTION operand .
+    (12) operands -> operand .
+    (21) expression -> operand . MATH_EXPRESSION operand
+    (22) expression -> operand . MATH_EXPRESSION operands
+  ! reduce/reduce conflict for INSTRUCTION resolved using rule 4 (statement -> INSTRUCTION operand .)
+  ! reduce/reduce conflict for LABEL resolved using rule 4 (statement -> INSTRUCTION operand .)
+  ! reduce/reduce conflict for $end resolved using rule 4 (statement -> INSTRUCTION operand .)
+    INSTRUCTION     reduce using rule 4 (statement -> INSTRUCTION operand .)
+    LABEL           reduce using rule 4 (statement -> INSTRUCTION operand .)
+    $end            reduce using rule 4 (statement -> INSTRUCTION operand .)
+    COMMA           reduce using rule 12 (operands -> operand .)
+    MATH_EXPRESSION shift and go to state 18
+
+
+state 8
+
+    (8) operands -> expression . COMMA operands
+    (14) operand -> expression .
+  ! shift/reduce conflict for COMMA resolved as shift
+    COMMA           shift and go to state 19
+    MATH_EXPRESSION reduce using rule 14 (operand -> expression .)
+    INSTRUCTION     reduce using rule 14 (operand -> expression .)
+    LABEL           reduce using rule 14 (operand -> expression .)
+    $end            reduce using rule 14 (operand -> expression .)
+
+
+state 9
+
+    (9) operands -> DECIMAL . COMMA operands
+    (17) operand -> DECIMAL .
+  ! shift/reduce conflict for COMMA resolved as shift
+    COMMA           shift and go to state 20
+    MATH_EXPRESSION reduce using rule 17 (operand -> DECIMAL .)
+    INSTRUCTION     reduce using rule 17 (operand -> DECIMAL .)
+    LABEL           reduce using rule 17 (operand -> DECIMAL .)
+    $end            reduce using rule 17 (operand -> DECIMAL .)
+
+
+state 10
+
+    (10) operands -> MEMORY_ADDRESS . COMMA operands
+    (20) operand -> MEMORY_ADDRESS .
+  ! shift/reduce conflict for COMMA resolved as shift
+    COMMA           shift and go to state 21
+    MATH_EXPRESSION reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    INSTRUCTION     reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    LABEL           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    $end            reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+
+
+state 11
+
+    (13) operand -> MATH_EXPRESSION . operand
+    (23) expression -> MATH_EXPRESSION .
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    COMMA           reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    INSTRUCTION     reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    LABEL           reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    $end            reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    MATH_EXPRESSION shift and go to state 11
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    DECIMAL         shift and go to state 24
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+    MEMORY_ADDRESS  shift and go to state 25
+
+    operand                        shift and go to state 22
+    expression                     shift and go to state 23
+
+state 12
+
+    (15) operand -> BINARY .
+    MATH_EXPRESSION reduce using rule 15 (operand -> BINARY .)
+    INSTRUCTION     reduce using rule 15 (operand -> BINARY .)
+    LABEL           reduce using rule 15 (operand -> BINARY .)
+    $end            reduce using rule 15 (operand -> BINARY .)
+    COMMA           reduce using rule 15 (operand -> BINARY .)
+
+
+state 13
+
+    (16) operand -> OCTAL .
+    MATH_EXPRESSION reduce using rule 16 (operand -> OCTAL .)
+    INSTRUCTION     reduce using rule 16 (operand -> OCTAL .)
+    LABEL           reduce using rule 16 (operand -> OCTAL .)
+    $end            reduce using rule 16 (operand -> OCTAL .)
+    COMMA           reduce using rule 16 (operand -> OCTAL .)
+
+
+state 14
+
+    (18) operand -> HEX .
+    MATH_EXPRESSION reduce using rule 18 (operand -> HEX .)
+    INSTRUCTION     reduce using rule 18 (operand -> HEX .)
+    LABEL           reduce using rule 18 (operand -> HEX .)
+    $end            reduce using rule 18 (operand -> HEX .)
+    COMMA           reduce using rule 18 (operand -> HEX .)
+
+
+state 15
+
+    (19) operand -> QUOTED_CHARACTER .
+    MATH_EXPRESSION reduce using rule 19 (operand -> QUOTED_CHARACTER .)
+    INSTRUCTION     reduce using rule 19 (operand -> QUOTED_CHARACTER .)
+    LABEL           reduce using rule 19 (operand -> QUOTED_CHARACTER .)
+    $end            reduce using rule 19 (operand -> QUOTED_CHARACTER .)
+    COMMA           reduce using rule 19 (operand -> QUOTED_CHARACTER .)
+
+
+state 16
+
+    (6) statement -> LABEL statement .
+    INSTRUCTION     reduce using rule 6 (statement -> LABEL statement .)
+    LABEL           reduce using rule 6 (statement -> LABEL statement .)
+    $end            reduce using rule 6 (statement -> LABEL statement .)
+
+
+state 17
+
+    (11) operands -> operands COMMA . operand
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    MATH_EXPRESSION shift and go to state 11
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    DECIMAL         shift and go to state 24
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+    MEMORY_ADDRESS  shift and go to state 25
+
+    operand                        shift and go to state 26
+    expression                     shift and go to state 23
+
+state 18
+
+    (21) expression -> operand MATH_EXPRESSION . operand
+    (22) expression -> operand MATH_EXPRESSION . operands
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    (8) operands -> . expression COMMA operands
+    (9) operands -> . DECIMAL COMMA operands
+    (10) operands -> . MEMORY_ADDRESS COMMA operands
+    (11) operands -> . operands COMMA operand
+    (12) operands -> . operand
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    MATH_EXPRESSION shift and go to state 11
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    DECIMAL         shift and go to state 30
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+    MEMORY_ADDRESS  shift and go to state 31
+
+    operand                        shift and go to state 27
+    operands                       shift and go to state 28
+    expression                     shift and go to state 29
+
+state 19
+
+    (8) operands -> expression COMMA . operands
+    (8) operands -> . expression COMMA operands
+    (9) operands -> . DECIMAL COMMA operands
+    (10) operands -> . MEMORY_ADDRESS COMMA operands
+    (11) operands -> . operands COMMA operand
+    (12) operands -> . operand
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    DECIMAL         shift and go to state 9
+    MEMORY_ADDRESS  shift and go to state 10
+    MATH_EXPRESSION shift and go to state 34
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+
+    expression                     shift and go to state 8
+    operands                       shift and go to state 32
+    operand                        shift and go to state 33
+
+state 20
+
+    (9) operands -> DECIMAL COMMA . operands
+    (8) operands -> . expression COMMA operands
+    (9) operands -> . DECIMAL COMMA operands
+    (10) operands -> . MEMORY_ADDRESS COMMA operands
+    (11) operands -> . operands COMMA operand
+    (12) operands -> . operand
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    DECIMAL         shift and go to state 9
+    MEMORY_ADDRESS  shift and go to state 10
+    MATH_EXPRESSION shift and go to state 34
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+
+    operands                       shift and go to state 35
+    expression                     shift and go to state 8
+    operand                        shift and go to state 33
+
+state 21
+
+    (10) operands -> MEMORY_ADDRESS COMMA . operands
+    (8) operands -> . expression COMMA operands
+    (9) operands -> . DECIMAL COMMA operands
+    (10) operands -> . MEMORY_ADDRESS COMMA operands
+    (11) operands -> . operands COMMA operand
+    (12) operands -> . operand
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    DECIMAL         shift and go to state 9
+    MEMORY_ADDRESS  shift and go to state 10
+    MATH_EXPRESSION shift and go to state 34
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+
+    operands                       shift and go to state 36
+    expression                     shift and go to state 8
+    operand                        shift and go to state 33
+
+state 22
+
+    (13) operand -> MATH_EXPRESSION operand .
+    (21) expression -> operand . MATH_EXPRESSION operand
+    (22) expression -> operand . MATH_EXPRESSION operands
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    INSTRUCTION     reduce using rule 13 (operand -> MATH_EXPRESSION operand .)
+    LABEL           reduce using rule 13 (operand -> MATH_EXPRESSION operand .)
+    $end            reduce using rule 13 (operand -> MATH_EXPRESSION operand .)
+    COMMA           reduce using rule 13 (operand -> MATH_EXPRESSION operand .)
+    MATH_EXPRESSION shift and go to state 18
+
+
+state 23
+
+    (14) operand -> expression .
+    MATH_EXPRESSION reduce using rule 14 (operand -> expression .)
+    INSTRUCTION     reduce using rule 14 (operand -> expression .)
+    LABEL           reduce using rule 14 (operand -> expression .)
+    $end            reduce using rule 14 (operand -> expression .)
+    COMMA           reduce using rule 14 (operand -> expression .)
+
+
+state 24
+
+    (17) operand -> DECIMAL .
+    MATH_EXPRESSION reduce using rule 17 (operand -> DECIMAL .)
+    INSTRUCTION     reduce using rule 17 (operand -> DECIMAL .)
+    LABEL           reduce using rule 17 (operand -> DECIMAL .)
+    $end            reduce using rule 17 (operand -> DECIMAL .)
+    COMMA           reduce using rule 17 (operand -> DECIMAL .)
+
+
+state 25
+
+    (20) operand -> MEMORY_ADDRESS .
+    MATH_EXPRESSION reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    INSTRUCTION     reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    LABEL           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    $end            reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    COMMA           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+
+
+state 26
+
+    (11) operands -> operands COMMA operand .
+    (21) expression -> operand . MATH_EXPRESSION operand
+    (22) expression -> operand . MATH_EXPRESSION operands
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    COMMA           reduce using rule 11 (operands -> operands COMMA operand .)
+    INSTRUCTION     reduce using rule 11 (operands -> operands COMMA operand .)
+    LABEL           reduce using rule 11 (operands -> operands COMMA operand .)
+    $end            reduce using rule 11 (operands -> operands COMMA operand .)
+    MATH_EXPRESSION shift and go to state 18
+
+
+state 27
+
+    (21) expression -> operand MATH_EXPRESSION operand .
+    (12) operands -> operand .
+    (21) expression -> operand . MATH_EXPRESSION operand
+    (22) expression -> operand . MATH_EXPRESSION operands
+  ! reduce/reduce conflict for MATH_EXPRESSION resolved using rule 12 (operands -> operand .)
+  ! reduce/reduce conflict for INSTRUCTION resolved using rule 12 (operands -> operand .)
+  ! reduce/reduce conflict for LABEL resolved using rule 12 (operands -> operand .)
+  ! reduce/reduce conflict for $end resolved using rule 12 (operands -> operand .)
+  ! reduce/reduce conflict for COMMA resolved using rule 12 (operands -> operand .)
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    INSTRUCTION     reduce using rule 12 (operands -> operand .)
+    LABEL           reduce using rule 12 (operands -> operand .)
+    $end            reduce using rule 12 (operands -> operand .)
+    COMMA           reduce using rule 12 (operands -> operand .)
+    MATH_EXPRESSION shift and go to state 18
+
+
+state 28
+
+    (22) expression -> operand MATH_EXPRESSION operands .
+    (11) operands -> operands . COMMA operand
+  ! shift/reduce conflict for COMMA resolved as shift
+    MATH_EXPRESSION reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
+    INSTRUCTION     reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
+    LABEL           reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
+    $end            reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
+    COMMA           shift and go to state 17
+
+
+state 29
+
+    (14) operand -> expression .
+    (8) operands -> expression . COMMA operands
+  ! shift/reduce conflict for COMMA resolved as shift
+    MATH_EXPRESSION reduce using rule 14 (operand -> expression .)
+    INSTRUCTION     reduce using rule 14 (operand -> expression .)
+    LABEL           reduce using rule 14 (operand -> expression .)
+    $end            reduce using rule 14 (operand -> expression .)
+    COMMA           shift and go to state 19
+
+
+state 30
+
+    (17) operand -> DECIMAL .
+    (9) operands -> DECIMAL . COMMA operands
+  ! shift/reduce conflict for COMMA resolved as shift
+    MATH_EXPRESSION reduce using rule 17 (operand -> DECIMAL .)
+    INSTRUCTION     reduce using rule 17 (operand -> DECIMAL .)
+    LABEL           reduce using rule 17 (operand -> DECIMAL .)
+    $end            reduce using rule 17 (operand -> DECIMAL .)
+    COMMA           shift and go to state 20
+
+
+state 31
+
+    (20) operand -> MEMORY_ADDRESS .
+    (10) operands -> MEMORY_ADDRESS . COMMA operands
+  ! shift/reduce conflict for COMMA resolved as shift
+    MATH_EXPRESSION reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    INSTRUCTION     reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    LABEL           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    $end            reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    COMMA           shift and go to state 21
+
+
+state 32
+
+    (8) operands -> expression COMMA operands .
+    (11) operands -> operands . COMMA operand
+  ! shift/reduce conflict for COMMA resolved as shift
+    INSTRUCTION     reduce using rule 8 (operands -> expression COMMA operands .)
+    LABEL           reduce using rule 8 (operands -> expression COMMA operands .)
+    $end            reduce using rule 8 (operands -> expression COMMA operands .)
+    MATH_EXPRESSION reduce using rule 8 (operands -> expression COMMA operands .)
+    COMMA           shift and go to state 17
+
+
+state 33
+
+    (12) operands -> operand .
+    (21) expression -> operand . MATH_EXPRESSION operand
+    (22) expression -> operand . MATH_EXPRESSION operands
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    INSTRUCTION     reduce using rule 12 (operands -> operand .)
+    LABEL           reduce using rule 12 (operands -> operand .)
+    $end            reduce using rule 12 (operands -> operand .)
+    COMMA           reduce using rule 12 (operands -> operand .)
+    MATH_EXPRESSION shift and go to state 18
+
+
+state 34
+
+    (23) expression -> MATH_EXPRESSION .
+    (13) operand -> MATH_EXPRESSION . operand
+    (13) operand -> . MATH_EXPRESSION operand
+    (14) operand -> . expression
+    (15) operand -> . BINARY
+    (16) operand -> . OCTAL
+    (17) operand -> . DECIMAL
+    (18) operand -> . HEX
+    (19) operand -> . QUOTED_CHARACTER
+    (20) operand -> . MEMORY_ADDRESS
+    (21) expression -> . operand MATH_EXPRESSION operand
+    (22) expression -> . operand MATH_EXPRESSION operands
+    (23) expression -> . MATH_EXPRESSION
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    INSTRUCTION     reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    LABEL           reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    $end            reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    COMMA           reduce using rule 23 (expression -> MATH_EXPRESSION .)
+    MATH_EXPRESSION shift and go to state 11
+    BINARY          shift and go to state 12
+    OCTAL           shift and go to state 13
+    DECIMAL         shift and go to state 24
+    HEX             shift and go to state 14
+    QUOTED_CHARACTER shift and go to state 15
+    MEMORY_ADDRESS  shift and go to state 25
+
+    operand                        shift and go to state 22
+    expression                     shift and go to state 23
+
+state 35
+
+    (9) operands -> DECIMAL COMMA operands .
+    (11) operands -> operands . COMMA operand
+  ! shift/reduce conflict for COMMA resolved as shift
+    INSTRUCTION     reduce using rule 9 (operands -> DECIMAL COMMA operands .)
+    LABEL           reduce using rule 9 (operands -> DECIMAL COMMA operands .)
+    $end            reduce using rule 9 (operands -> DECIMAL COMMA operands .)
+    MATH_EXPRESSION reduce using rule 9 (operands -> DECIMAL COMMA operands .)
+    COMMA           shift and go to state 17
+
+
+state 36
+
+    (10) operands -> MEMORY_ADDRESS COMMA operands .
+    (11) operands -> operands . COMMA operand
+  ! shift/reduce conflict for COMMA resolved as shift
+    INSTRUCTION     reduce using rule 10 (operands -> MEMORY_ADDRESS COMMA operands .)
+    LABEL           reduce using rule 10 (operands -> MEMORY_ADDRESS COMMA operands .)
+    $end            reduce using rule 10 (operands -> MEMORY_ADDRESS COMMA operands .)
+    MATH_EXPRESSION reduce using rule 10 (operands -> MEMORY_ADDRESS COMMA operands .)
+    COMMA           shift and go to state 17
+
+
+Conflicts:
+
+shift/reduce conflict for INSTRUCTION in state 4 resolved as shift
+shift/reduce conflict for LABEL in state 4 resolved as shift
+shift/reduce conflict for COMMA in state 8 resolved as shift
+shift/reduce conflict for COMMA in state 9 resolved as shift
+shift/reduce conflict for COMMA in state 10 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 11 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 22 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 26 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 27 resolved as shift
+shift/reduce conflict for COMMA in state 28 resolved as shift
+shift/reduce conflict for COMMA in state 29 resolved as shift
+shift/reduce conflict for COMMA in state 30 resolved as shift
+shift/reduce conflict for COMMA in state 31 resolved as shift
+shift/reduce conflict for COMMA in state 32 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 33 resolved as shift
+shift/reduce conflict for MATH_EXPRESSION in state 34 resolved as shift
+shift/reduce conflict for COMMA in state 35 resolved as shift
+shift/reduce conflict for COMMA in state 36 resolved as shift
+reduce/reduce conflict in state 7 resolved using rule statement -> INSTRUCTION operand
+rejected rule (operands -> operand) in state 7
+reduce/reduce conflict in state 27 resolved using rule operands -> operand
+rejected rule (expression -> operand MATH_EXPRESSION operand) in state 27
+Rule (expression -> operand MATH_EXPRESSION operand) is never reduced
