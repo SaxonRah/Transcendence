@@ -59,9 +59,9 @@ class I8080Parser(Parser):
     def __init__(self):
         self.ast = []
 
-    # @_('')
-    # def program(self, p):
-    #     return []
+    @_('')
+    def program(self, p):
+        return []
 
     @_('program statement')
     def program(self, p):
