@@ -1,16 +1,22 @@
 ![](https://github.com/SaxonRah/Transcendence/blob/main/imgs/Transcendence.gif)
 ## What's in a name?
-Quite a bit, apparently.  
-***Transcendence*** is a backronym.  
-<sup>***T***echnique (for) ***R***etroactively ***A***dapting ***N***umerous ***S***ource ***C***ode ***E***xpressions (and) ***N***avigating ***D***iverse ***E***mbedded ***N***otation ***C***ontexts ***E***fficiently</sup>  
-<sup>It has a meaning aswell: The state of assembly code which **transcends** architectures. AKA ***Transcendence***.</sup>  
+Quite a bit, apparently. ***Transcendence*** has a meaning and itself is a backronym:    
+***Transcendence:*** The state of assembly code which **transcends** architectures.  
+***T***<sup>echnique <sup>(for)</sup></sup> ***R***<sup>etroactively</sup> ***A***<sup>dapting</sup> ***N***<sup>umerous</sup> ***S***<sup>ource</sup> ***C***<sup>ode</sup> ***E***<sup>xpressions <sup>(and)</sup></sup> ***N***<sup>avigating</sup> ***D***<sup>iverse</sup> ***E***<sup>mbedded</sup> ***N***<sup>otation</sup> ***C***<sup>ontexts</sup> ***E***<sup>fficiently</sup>
+
 ## A PL/M & Intel 8080 Assembly to Arm M0+ Translation Tool.
-*__One day I'd like to see a tool that could translate:__*  
-*__8080, 8085, 8086, 6502, Z80, M6800, M68000, i186, i286, i386, i486 to an ARM ISA.__*  
-<sup>*__This is the starting point of that dream.__*</sup>
+- *__I dream of a translation tool for Assembly/Higher Level Languages to an ARM ISA:__*  
+   - *__8-Bit: 8008, 8080, 8085, 6502, Z80, M6800__*  
+   - *__16-Bit: 8086, Z800, Z8000, i186, i286__*  
+   - *__32-Bit: Z80000, M68000, i386, i486__*
+   - *__Languages: PL/M, Forth, Pascal__*
+
+<sup>*__This is the starting point of that dream and tool.  
+This is an extremely complex dream and will probably never be fully actualized.  
+However I'm willing to try.__*</sup>
 
 ## Overview
-Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. Transcendence aims to bridge the gap between legacy Intel 8080 and PL/M codebases and modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.  
+Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. Transcendence (for now) aims to bridge the gap between legacy various 8-Bit CPUs and PL/M codebases with modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.  
 
 ## Specification
 Current specification is located here -> [Handling Differences a Specification](/specification/Handling_Differences_Specification.md)
@@ -23,7 +29,7 @@ Current specification is located here -> [Handling Differences a Specification](
    - Going forward, I will make an effort to follow this. The current playground doesn't follow this.
 
 ## Playground
-You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder. This is where I try out ideas and work on designing the specification and development of Transcendence.
+You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder. This is where I try out ideas/work on designing the specification and Transcendence.
 
 - CP/M 2.2 in PL/M is completely pattern matched and PL/M has a complete set of regexes.
    - Looking for more PL/M code to test.
@@ -36,12 +42,13 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
 - Added SLY lexer and parser for I8080
    - [SLY_I8080.py](/python/playground/SLY_I8080.py)
       - Technically supports 8080 and 8085. 8085 is untested.
-         - 8086 is also possible with a few addition/changes.
+         - 8086 is also possible with a few additions and changes.
       - Allows for highly simplistic Abstract Syntax Tree construction.
-      - 🍖 🍴 Massive SLY refactor. Dragons cooked. 🍴 🍖
+      - 🍖🍴 Massive SLY refactor. Dragons cooked. 🍴🍖
          - :godmode: Slain the lexing and parsing dragons. :godmode:
          - :hurtrealbad: Added inital pass for macros and directives. :hurtrealbad: 
       - 8080_fp16.ASM lexes and parses in it's entirety.
+         - 8080_fp16.ASM is a 8080 assembly implmentation of floating point math by Vitaly Lunyov.
          - 🎆🎆🎆Now I can focus on translating the AST into ARMv6-M ISA. 🎆🎆🎆
             - I might work on 8085/8086 for a bit before I move on to translation.
 
