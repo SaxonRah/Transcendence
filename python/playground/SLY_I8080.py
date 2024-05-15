@@ -1,10 +1,13 @@
+import ast
+from pprint import pprint
 from sly import Lexer, Parser
 
 
 class I8080Lexer(Lexer):
     labels = {}
+    macros = {}
     tokens = {
-        LABEL, INSTRUCTION, COMMA,
+        LABEL, DIRECTIVE, MACRO, INSTRUCTION, COMMA,
         HEX, DECIMAL, OCTAL, BINARY,
         QUOTED_CHARACTER, MEMORY_ADDRESS, DECIMAL,
         MATH_EXPRESSION,
@@ -17,6 +20,8 @@ class I8080Lexer(Lexer):
     def ignore_newline(self, t):
         self.lineno += len(t.value)
 
+    literals = {'<', '>'}
+
     QUOTED_CHARACTER = r"'[^']'"
 
     @_(r'\b\w+:')
@@ -26,7 +31,18 @@ class I8080Lexer(Lexer):
         # TODO: create label dictionary for AST traversal after parsing is fixed.
         return t
 
-    INSTRUCTION = r'(?<!\w)(EQU|ORG|MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT|PCHL|SPHL|XCHG|XTHL|DI|EI|NOP|RLC|RRC|RAL|RAR|STC|CMC|HLT|STAX|INX|MVI|PUSH|POP|RNZ|RP|RZ|CM|DAD|RC|CPI|LXI|RNC|CNZ|LHLD|DB|DCX|LDAX|DW)(?!\w)'
+    @_(r'(?<!\w)(MACRO|ENDM|LOCAL|REPT|IRP|IRPC|EXITM)(?!\w)')
+    def MACRO(self, t):
+        self.macros[t.value] = t.value
+        return t
+
+    @_(r'(?<!\w)(EQU|SET|DB|DW|DS|IF|ELSE|ENDIF|END|ASEG|DSEG|CSEG|ORG|PUBLIC|EXTRN|NAME|STKLN|STACK|MEMORY)(?!\w)')
+    def DIRECTIVE(self, t):
+        return t
+
+    @_(r'(?<!\w)(MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT|PCHL|SPHL|XCHG|XTHL|DI|EI|NOP|RLC|RRC|RAL|RAR|STC|CMC|HLT|STAX|INX|MVI|PUSH|POP|RNZ|RP|RZ|CM|DAD|RC|CPI|LXI|RNC|CNZ|LHLD|DCX|LDAX)(?!\w)')
+    def INSTRUCTION(self, t):
+        return t
 
     COMMA = r','
 
@@ -34,12 +50,6 @@ class I8080Lexer(Lexer):
 
     @_(r'([+\-])')
     def MATH_EXPRESSION(self, t):
-        # print("\t\t\t VALUE: ", t.value)
-        # if t.value.startswith("'"):
-        #     print("\t found ':  ", t)
-        #     return None
-        # else:
-        #     print('\t t:  ', t)
         return t
 
     HEX = r'\-?([0-9a-fA-F]+(H))'
@@ -80,14 +90,25 @@ class I8080Parser(Parser):
     def statement(self, p):
         return [p.LABEL, p.statement]
 
+    @_('MACRO')
+    def statement(self, p):
+        return [p.MACRO]
+
+    @_('MACRO operands')
+    def statement(self, p):
+        return [p.MACRO, p.operands]
+
+    @_('MACRO operands MACRO')
+    def statement(self, p):
+        return [p.MACRO0, p.operands, p.MACRO1]
+
+    @_('DIRECTIVE operands')
+    def statement(self, p):
+        return [p.DIRECTIVE, p.operands]
 
     @_('INSTRUCTION')
     def statement(self, p):
         return [p.INSTRUCTION]
-
-    @_('INSTRUCTION operand')
-    def statement(self, p):
-        return [p.INSTRUCTION, p.operand]
 
     @_('INSTRUCTION operands')
     def statement(self, p):
@@ -99,19 +120,19 @@ class I8080Parser(Parser):
 
     @_('operands COMMA operand')
     def operands(self, p):
-        return [p.operands, p.COMMA, p.operand]
+        return (p.operands, p.COMMA, p.operand)
 
-    @_('MEMORY_ADDRESS COMMA operands')
-    def operands(self, p):
-        return [p.MEMORY_ADDRESS, p.COMMA, p.operands]
+    # @_('MEMORY_ADDRESS COMMA operands')
+    # def operands(self, p):
+    #     return [p.MEMORY_ADDRESS, p.COMMA, p.operands]
 
-    @_('DECIMAL COMMA operands')
-    def operands(self, p):
-        return [p.DECIMAL, p.COMMA, p.operands]
+    # @_('DECIMAL COMMA operands')
+    # def operands(self, p):
+    #     return (p.DECIMAL, p.COMMA, p.operands)
 
-    @_('expression COMMA operands')
-    def operands(self, p):
-        return [p.expression, p.COMMA, p.operands]
+    # @_('expression COMMA operands')
+    # def operands(self, p):
+    #     return (p.expression, p.COMMA, p.operands)
 
     @_('MEMORY_ADDRESS')
     def operand(self, p):
@@ -149,9 +170,9 @@ class I8080Parser(Parser):
     def expression(self, p):
         return (p.operand, p.MATH_EXPRESSION, p.operands)
 
-    @_('operand MATH_EXPRESSION operand')
-    def expression(self, p):
-        return (p.operand0, p.MATH_EXPRESSION, p.operand1)
+    # @_('operand MATH_EXPRESSION operand')
+    # def expression(self, p):
+    #     return (p.operand0, p.MATH_EXPRESSION, p.operand1)
 
     @_('MATH_EXPRESSION operand')
     def operand(self, p):
@@ -175,10 +196,10 @@ def test_sly_parser(code):
     lexer = I8080Lexer()
     parser = I8080Parser()
     print("Parsing---------------------------------------------------------------------------------------------Parsing")
-    ast = parser.parse(lexer.tokenize(code))
-    for abs_syn in ast:
+    sly_ast = parser.parse(lexer.tokenize(code))
+    for abs_syn in sly_ast:
         print(abs_syn)
-    print(ast)
+    print(sly_ast)
     print("End Parsing")
 
 
