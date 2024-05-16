@@ -1,11 +1,14 @@
-import ast
-from pprint import pprint
 from sly import Lexer, Parser
+
+# TODO: create identical PLY version for shits and giggles.
+#  Also because SLY is technically not supported anymore but PLY is.
+#  I prefer SLY but PLY might be worth the support.
 
 
 class I8080Lexer(Lexer):
     labels = {}
     macros = {}
+    directives = {}
     tokens = {
         LABEL, DIRECTIVE, MACRO, INSTRUCTION, COMMA,
         HEX, DECIMAL, OCTAL, BINARY,
@@ -14,6 +17,7 @@ class I8080Lexer(Lexer):
     }
 
     ignore = ' \t'
+    # TODO: add comments into the lexer and parser for AST traversal translation.
     ignore_comment = r';.*'
 
     @_(r'\n+')
@@ -28,16 +32,19 @@ class I8080Lexer(Lexer):
     def LABEL(self, t):
         t.value = t.value.strip(':')
         self.labels[t.value] = t.value
-        # TODO: create label dictionary for AST traversal after parsing is fixed.
+        # TODO: create label dictionary for AST traversal translation
         return t
 
     @_(r'(?<!\w)(MACRO|ENDM|LOCAL|REPT|IRP|IRPC|EXITM)(?!\w)')
     def MACRO(self, t):
         self.macros[t.value] = t.value
+        # TODO: create macro dictionary for AST traversal translation
         return t
 
     @_(r'(?<!\w)(EQU|SET|DB|DW|DS|IF|ELSE|ENDIF|END|ASEG|DSEG|CSEG|ORG|PUBLIC|EXTRN|NAME|STKLN|STACK|MEMORY)(?!\w)')
     def DIRECTIVE(self, t):
+        self.directives[t.value] = t.value
+        # TODO: create directives dictionary for AST traversal translation
         return t
 
     @_(r'(?<!\w)(MOV|ADD|SUB|INR|DCR|CMA|CMP|ANA|XRA|ORA|ADI|ACI|SUI|SBI|ANI|XRI|ORI|CALL|RET|JMP|JC|JNC|JZ|JNZ|JP|JM|JPE|JPO|HLT|PCHL|SPHL|XCHG|XTHL|DI|EI|NOP|RLC|RRC|RAL|RAR|STC|CMC|HLT|STAX|INX|MVI|PUSH|POP|RNZ|RP|RZ|CM|DAD|RC|CPI|LXI|RNC|CNZ|LHLD|DCX|LDAX)(?!\w)')
@@ -64,10 +71,12 @@ class I8080Lexer(Lexer):
 
 class I8080Parser(Parser):
     tokens = I8080Lexer.tokens
-    debugfile = 'i8080_parser.out'
+    debugfile = 'SLY_i8080_parser.out'
 
     def __init__(self):
         self.ast = []
+
+    # TODO: clean up the 14 shift/reduce conflicts
 
     @_('')
     def program(self, p):
@@ -114,13 +123,17 @@ class I8080Parser(Parser):
     def statement(self, p):
         return [p.INSTRUCTION, p.operands]
 
-    @_('operand')
-    def operands(self, p):
-        return p.operand
+    # @_('operands COMMA operands')
+    # def operands(self, p):
+    #     return [p.operands0, p.COMMA].append(p.operands1)
 
     @_('operands COMMA operand')
     def operands(self, p):
         return (p.operands, p.COMMA, p.operand)
+
+    @_('operand')
+    def operands(self, p):
+        return p.operand
 
     # @_('MEMORY_ADDRESS COMMA operands')
     # def operands(self, p):
@@ -166,6 +179,10 @@ class I8080Parser(Parser):
     def expression(self, p):
         return p.MATH_EXPRESSION
 
+    # @_('operands MATH_EXPRESSION operands')
+    # def expression(self, p):
+    #     return (p.operands0, p.MATH_EXPRESSION, p.operands1)
+
     @_('operand MATH_EXPRESSION operands')
     def expression(self, p):
         return (p.operand, p.MATH_EXPRESSION, p.operands)
@@ -183,6 +200,9 @@ class I8080Parser(Parser):
         print(f"\t{p}")
         print()
 
+# TODO: create lexer / parser functions that return
+#  tokens, and separate labels, macros, directives dictionaries to build a real AST and not the SLY list.
+
 
 def test_sly_lexer(code):
     lexer = I8080Lexer()
@@ -197,6 +217,7 @@ def test_sly_parser(code):
     parser = I8080Parser()
     print("Parsing---------------------------------------------------------------------------------------------Parsing")
     sly_ast = parser.parse(lexer.tokenize(code))
+    #  return sly_ast
     for abs_syn in sly_ast:
         print(abs_syn)
     print(sly_ast)
@@ -249,9 +270,6 @@ DB 3C00H,   4170H, 4248H,       4900H
 DW F16_1, F16_10,  5640H,   63D0H,    70D2H
 """
 
-test_sly_lexer(input_code)
-test_sly_parser(input_code)
-
 
 def test_fp16():
     #  test fp16.ASM
@@ -267,4 +285,11 @@ def test_fp16():
         print(e)
 
 
-test_fp16()
+def test_i8080_lexer_parser():
+    test_sly_lexer(input_code)
+    test_sly_parser(input_code)
+    test_fp16()
+
+
+if __name__ == "__main__":
+    test_i8080_lexer_parser()

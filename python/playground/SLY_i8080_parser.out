@@ -12,8 +12,8 @@ Rule 8     statement -> MACRO operands
 Rule 9     statement -> MACRO
 Rule 10    statement -> LABEL statement
 Rule 11    statement -> LABEL
-Rule 12    operands -> operands COMMA operand
-Rule 13    operands -> operand
+Rule 12    operands -> operand
+Rule 13    operands -> operands COMMA operand
 Rule 14    operand -> MATH_EXPRESSION operand
 Rule 15    operand -> expression
 Rule 16    operand -> BINARY
@@ -28,7 +28,7 @@ Rule 23    expression -> MATH_EXPRESSION
 Terminals, with rules where they appear:
 
 BINARY               : 16
-COMMA                : 12
+COMMA                : 13
 DECIMAL              : 18
 DIRECTIVE            : 6
 HEX                  : 19
@@ -45,7 +45,7 @@ Nonterminals, with rules where they appear:
 
 expression           : 15
 operand              : 12 13 14 22
-operands             : 4 6 7 8 12 22
+operands             : 4 6 7 8 13 22
 program              : 2 0
 statement            : 1 2 10
 
@@ -110,8 +110,8 @@ state 3
 
     (4) statement -> INSTRUCTION . operands
     (5) statement -> INSTRUCTION .
-    (12) operands -> . operands COMMA operand
-    (13) operands -> . operand
+    (12) operands -> . operand
+    (13) operands -> . operands COMMA operand
     (14) operand -> . MATH_EXPRESSION operand
     (15) operand -> . expression
     (16) operand -> . BINARY
@@ -142,8 +142,8 @@ state 3
 state 4
 
     (6) statement -> DIRECTIVE . operands
-    (12) operands -> . operands COMMA operand
-    (13) operands -> . operand
+    (12) operands -> . operand
+    (13) operands -> . operands COMMA operand
     (14) operand -> . MATH_EXPRESSION operand
     (15) operand -> . expression
     (16) operand -> . BINARY
@@ -171,8 +171,8 @@ state 5
     (7) statement -> MACRO . operands MACRO
     (8) statement -> MACRO . operands
     (9) statement -> MACRO .
-    (12) operands -> . operands COMMA operand
-    (13) operands -> . operand
+    (12) operands -> . operand
+    (13) operands -> . operands COMMA operand
     (14) operand -> . MATH_EXPRESSION operand
     (15) operand -> . expression
     (16) operand -> . BINARY
@@ -237,7 +237,7 @@ state 7
 state 8
 
     (4) statement -> INSTRUCTION operands .
-    (12) operands -> operands . COMMA operand
+    (13) operands -> operands . COMMA operand
     INSTRUCTION     reduce using rule 4 (statement -> INSTRUCTION operands .)
     DIRECTIVE       reduce using rule 4 (statement -> INSTRUCTION operands .)
     MACRO           reduce using rule 4 (statement -> INSTRUCTION operands .)
@@ -248,15 +248,15 @@ state 8
 
 state 9
 
-    (13) operands -> operand .
+    (12) operands -> operand .
     (22) expression -> operand . MATH_EXPRESSION operands
   ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
-    COMMA           reduce using rule 13 (operands -> operand .)
-    INSTRUCTION     reduce using rule 13 (operands -> operand .)
-    DIRECTIVE       reduce using rule 13 (operands -> operand .)
-    MACRO           reduce using rule 13 (operands -> operand .)
-    LABEL           reduce using rule 13 (operands -> operand .)
-    $end            reduce using rule 13 (operands -> operand .)
+    COMMA           reduce using rule 12 (operands -> operand .)
+    INSTRUCTION     reduce using rule 12 (operands -> operand .)
+    DIRECTIVE       reduce using rule 12 (operands -> operand .)
+    MACRO           reduce using rule 12 (operands -> operand .)
+    LABEL           reduce using rule 12 (operands -> operand .)
+    $end            reduce using rule 12 (operands -> operand .)
     MATH_EXPRESSION shift and go to state 22
 
 
@@ -379,7 +379,7 @@ state 17
 state 18
 
     (6) statement -> DIRECTIVE operands .
-    (12) operands -> operands . COMMA operand
+    (13) operands -> operands . COMMA operand
     INSTRUCTION     reduce using rule 6 (statement -> DIRECTIVE operands .)
     DIRECTIVE       reduce using rule 6 (statement -> DIRECTIVE operands .)
     MACRO           reduce using rule 6 (statement -> DIRECTIVE operands .)
@@ -392,7 +392,7 @@ state 19
 
     (7) statement -> MACRO operands . MACRO
     (8) statement -> MACRO operands .
-    (12) operands -> operands . COMMA operand
+    (13) operands -> operands . COMMA operand
   ! shift/reduce conflict for MACRO resolved as shift
     MACRO           shift and go to state 24
     INSTRUCTION     reduce using rule 8 (statement -> MACRO operands .)
@@ -414,7 +414,7 @@ state 20
 
 state 21
 
-    (12) operands -> operands COMMA . operand
+    (13) operands -> operands COMMA . operand
     (14) operand -> . MATH_EXPRESSION operand
     (15) operand -> . expression
     (16) operand -> . BINARY
@@ -439,8 +439,8 @@ state 21
 state 22
 
     (22) expression -> operand MATH_EXPRESSION . operands
-    (12) operands -> . operands COMMA operand
-    (13) operands -> . operand
+    (12) operands -> . operand
+    (13) operands -> . operands COMMA operand
     (14) operand -> . MATH_EXPRESSION operand
     (15) operand -> . expression
     (16) operand -> . BINARY
@@ -489,22 +489,22 @@ state 24
 
 state 25
 
-    (12) operands -> operands COMMA operand .
+    (13) operands -> operands COMMA operand .
     (22) expression -> operand . MATH_EXPRESSION operands
   ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
-    COMMA           reduce using rule 12 (operands -> operands COMMA operand .)
-    INSTRUCTION     reduce using rule 12 (operands -> operands COMMA operand .)
-    DIRECTIVE       reduce using rule 12 (operands -> operands COMMA operand .)
-    MACRO           reduce using rule 12 (operands -> operands COMMA operand .)
-    LABEL           reduce using rule 12 (operands -> operands COMMA operand .)
-    $end            reduce using rule 12 (operands -> operands COMMA operand .)
+    COMMA           reduce using rule 13 (operands -> operands COMMA operand .)
+    INSTRUCTION     reduce using rule 13 (operands -> operands COMMA operand .)
+    DIRECTIVE       reduce using rule 13 (operands -> operands COMMA operand .)
+    MACRO           reduce using rule 13 (operands -> operands COMMA operand .)
+    LABEL           reduce using rule 13 (operands -> operands COMMA operand .)
+    $end            reduce using rule 13 (operands -> operands COMMA operand .)
     MATH_EXPRESSION shift and go to state 22
 
 
 state 26
 
     (22) expression -> operand MATH_EXPRESSION operands .
-    (12) operands -> operands . COMMA operand
+    (13) operands -> operands . COMMA operand
   ! shift/reduce conflict for COMMA resolved as shift
     MATH_EXPRESSION reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
     INSTRUCTION     reduce using rule 22 (expression -> operand MATH_EXPRESSION operands .)
