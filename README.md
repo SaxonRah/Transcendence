@@ -46,7 +46,10 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
       - Allows for highly simplistic Abstract Syntax Tree construction.
       - 🍖🍴 Massive SLY refactor. Dragons cooked. 🍴🍖
          - :godmode: Slain the lexing and parsing dragons. :godmode:
-         - :hurtrealbad: Added inital pass for macros and directives. :hurtrealbad: 
+         - :hurtrealbad: Added inital pass for macros and directives. :hurtrealbad:
+         - Deprecated.
+      - Rebuilt the SLY lexer and Parser in PLY
+         - All future updates will happen in PLY, not SLY. 
       - 8080_fp16.ASM lexes and parses in it's entirety.
          - 8080_fp16.ASM is a 8080 assembly implmentation of floating point math by Vitaly Lunyov.
          - 🎆🎆🎆Now I can focus on translating the AST into ARMv6-M ISA. 🎆🎆🎆
