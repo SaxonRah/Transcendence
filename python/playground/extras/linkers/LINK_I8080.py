@@ -35,7 +35,7 @@ def link_i8080_hex_file(hex_file_path):
 
 
 def test_link_i8080_hex_file():
-    hex_file = '../example_asm/8080_fp16.HEX'
+    hex_file = '../../example_asm/8080_fp16.HEX'
     # hex_file = '../example_asm/new_8080_fp16.HEX'
     linked_data = link_i8080_hex_file(hex_file)
     print(linked_data)

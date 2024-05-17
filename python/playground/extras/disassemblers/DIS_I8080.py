@@ -594,7 +594,7 @@ def test_disassemble_buffer():
     #  buffer = [0x3e, 0x05, 0x32, 0x00, 0x80, 0x3e, 0x08, 0x32, 0x00, 0x81, 0x3e, 0x00, 0x32, 0x00, 0x82, 0xc9]
     #  disassemble_buffer(buffer)
 
-    hex_file_path = '../example_asm/8080_fp16.HEX'
+    hex_file_path = '../../example_asm/8080_fp16.HEX'
     buffer = read_hex_file(hex_file_path)
     disassemble_buffer(buffer)
 

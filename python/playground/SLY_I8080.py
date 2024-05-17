@@ -3,6 +3,8 @@ from sly import Lexer, Parser
 # TODO: create identical PLY version for shits and giggles.
 #  Also because SLY is technically not supported anymore but PLY is.
 #  I prefer SLY but PLY might be worth the support.
+#  This is done, and I will no longer work on this SLY implementation.
+#  All future lexing and parsing updates will be in the PLY version.
 
 
 class I8080Lexer(Lexer):
@@ -11,7 +13,7 @@ class I8080Lexer(Lexer):
     directives = {}
     tokens = {
         LABEL, DIRECTIVE, MACRO, INSTRUCTION, COMMA,
-        HEX, DECIMAL, OCTAL, BINARY,
+        HEX, DECIMAL, OCTAL, BINARY, REGISTER,
         QUOTED_CHARACTER, MEMORY_ADDRESS,
         MATH_EXPRESSION,
     }
@@ -27,6 +29,8 @@ class I8080Lexer(Lexer):
     literals = {'<', '>'}
 
     QUOTED_CHARACTER = r"'[^']'"
+
+    REGISTER = r'(?<!\w)(A|B|C|D|E|H|L|M|SP|PSW|BC|DE|HL)(?!\w)\b'
 
     @_(r'\b\w+:')
     def LABEL(self, t):
@@ -51,18 +55,19 @@ class I8080Lexer(Lexer):
     def INSTRUCTION(self, t):
         return t
 
-    COMMA = r','
+    COMMA = r'[,]'
 
-    MEMORY_ADDRESS = r'(?![0-9])[A-Za-z_\$][A-Za-z0-9_]*(?!\w)'
+    MEMORY_ADDRESS = r'[A-Za-z_\$][A-Za-z0-9_]*(?!\w)'
+    # MEMORY_ADDRESS = r'(?![0-9])[A-Za-z_\$][A-Za-z0-9_]*(?!\w)'
 
     @_(r'([+\-])')
     def MATH_EXPRESSION(self, t):
         return t
 
-    HEX = r'\-?([0-9a-fA-F]+(H))'
-    OCTAL = r'(\-?[0-7]+([OQ]))'
-    BINARY = r'\-?([01]+(B))'
-    DECIMAL = r'\'?\-?[0-9]+D?\.?[0-9]*D?\'?|[0-9]'
+    HEX = r'\-?([0-9a-fA-F]+(H))\b'
+    OCTAL = r'(\-?[0-7]+([OQ]))\b'
+    BINARY = r'\-?([01]+(B))\b'
+    DECIMAL = r'\'?\-?[0-9]+D?\.?[0-9]*D?\'?|[0-9]\b'
 
     def error(self, t):
         print(f"Illegal character '{t.value[0]}' at line {self.lineno}")
@@ -154,6 +159,10 @@ class I8080Parser(Parser):
     @_('QUOTED_CHARACTER')
     def operand(self, p):
         return p.QUOTED_CHARACTER
+
+    @_('REGISTER')
+    def operand(self, p):
+        return p.REGISTER
 
     @_('HEX')
     def operand(self, p):

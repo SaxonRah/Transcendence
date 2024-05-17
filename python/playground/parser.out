@@ -1,0 +1,612 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> <empty>
+Rule 2     program -> program statement
+Rule 3     program -> statement
+Rule 4     statement -> LABEL
+Rule 5     statement -> LABEL statement
+Rule 6     statement -> MACRO
+Rule 7     statement -> MACRO operands
+Rule 8     statement -> MACRO operands MACRO
+Rule 9     statement -> DIRECTIVE operands
+Rule 10    statement -> INSTRUCTION
+Rule 11    statement -> INSTRUCTION operands
+Rule 12    operands -> operands COMMA operand
+Rule 13    operands -> operand
+Rule 14    operand -> QUOTED_CHARACTER
+Rule 15    operand -> REGISTER
+Rule 16    operand -> HEX
+Rule 17    operand -> DECIMAL
+Rule 18    operand -> OCTAL
+Rule 19    operand -> BINARY
+Rule 20    operand -> MEMORY_ADDRESS
+Rule 21    operand -> expression
+Rule 22    expression -> MATH_EXPRESSION
+Rule 23    expression -> operand MATH_EXPRESSION operands
+Rule 24    operand -> MATH_EXPRESSION operand
+
+Terminals, with rules where they appear
+
+BINARY               : 19
+COMMA                : 12
+DECIMAL              : 17
+DIRECTIVE            : 9
+HEX                  : 16
+INSTRUCTION          : 10 11
+LABEL                : 4 5
+MACRO                : 6 7 8 8
+MATH_EXPRESSION      : 22 23 24
+MEMORY_ADDRESS       : 20
+OCTAL                : 18
+QUOTED_CHARACTER     : 14
+REGISTER             : 15
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 21
+operand              : 12 13 23 24
+operands             : 7 8 9 11 12 23
+program              : 2 0
+statement            : 2 3 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> .
+    (2) program -> . program statement
+    (3) program -> . statement
+    (4) statement -> . LABEL
+    (5) statement -> . LABEL statement
+    (6) statement -> . MACRO
+    (7) statement -> . MACRO operands
+    (8) statement -> . MACRO operands MACRO
+    (9) statement -> . DIRECTIVE operands
+    (10) statement -> . INSTRUCTION
+    (11) statement -> . INSTRUCTION operands
+
+  ! shift/reduce conflict for LABEL resolved as shift
+  ! shift/reduce conflict for MACRO resolved as shift
+  ! shift/reduce conflict for DIRECTIVE resolved as shift
+  ! shift/reduce conflict for INSTRUCTION resolved as shift
+    $end            reduce using rule 1 (program -> .)
+    LABEL           shift and go to state 3
+    MACRO           shift and go to state 4
+    DIRECTIVE       shift and go to state 5
+    INSTRUCTION     shift and go to state 6
+
+  ! LABEL           [ reduce using rule 1 (program -> .) ]
+  ! MACRO           [ reduce using rule 1 (program -> .) ]
+  ! DIRECTIVE       [ reduce using rule 1 (program -> .) ]
+  ! INSTRUCTION     [ reduce using rule 1 (program -> .) ]
+
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+    (2) program -> program . statement
+    (4) statement -> . LABEL
+    (5) statement -> . LABEL statement
+    (6) statement -> . MACRO
+    (7) statement -> . MACRO operands
+    (8) statement -> . MACRO operands MACRO
+    (9) statement -> . DIRECTIVE operands
+    (10) statement -> . INSTRUCTION
+    (11) statement -> . INSTRUCTION operands
+
+    LABEL           shift and go to state 3
+    MACRO           shift and go to state 4
+    DIRECTIVE       shift and go to state 5
+    INSTRUCTION     shift and go to state 6
+
+    statement                      shift and go to state 7
+
+state 2
+
+    (3) program -> statement .
+
+    LABEL           reduce using rule 3 (program -> statement .)
+    MACRO           reduce using rule 3 (program -> statement .)
+    DIRECTIVE       reduce using rule 3 (program -> statement .)
+    INSTRUCTION     reduce using rule 3 (program -> statement .)
+    $end            reduce using rule 3 (program -> statement .)
+
+
+state 3
+
+    (4) statement -> LABEL .
+    (5) statement -> LABEL . statement
+    (4) statement -> . LABEL
+    (5) statement -> . LABEL statement
+    (6) statement -> . MACRO
+    (7) statement -> . MACRO operands
+    (8) statement -> . MACRO operands MACRO
+    (9) statement -> . DIRECTIVE operands
+    (10) statement -> . INSTRUCTION
+    (11) statement -> . INSTRUCTION operands
+
+  ! shift/reduce conflict for LABEL resolved as shift
+  ! shift/reduce conflict for MACRO resolved as shift
+  ! shift/reduce conflict for DIRECTIVE resolved as shift
+  ! shift/reduce conflict for INSTRUCTION resolved as shift
+    $end            reduce using rule 4 (statement -> LABEL .)
+    LABEL           shift and go to state 3
+    MACRO           shift and go to state 4
+    DIRECTIVE       shift and go to state 5
+    INSTRUCTION     shift and go to state 6
+
+  ! LABEL           [ reduce using rule 4 (statement -> LABEL .) ]
+  ! MACRO           [ reduce using rule 4 (statement -> LABEL .) ]
+  ! DIRECTIVE       [ reduce using rule 4 (statement -> LABEL .) ]
+  ! INSTRUCTION     [ reduce using rule 4 (statement -> LABEL .) ]
+
+    statement                      shift and go to state 8
+
+state 4
+
+    (6) statement -> MACRO .
+    (7) statement -> MACRO . operands
+    (8) statement -> MACRO . operands MACRO
+    (12) operands -> . operands COMMA operand
+    (13) operands -> . operand
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+    LABEL           reduce using rule 6 (statement -> MACRO .)
+    MACRO           reduce using rule 6 (statement -> MACRO .)
+    DIRECTIVE       reduce using rule 6 (statement -> MACRO .)
+    INSTRUCTION     reduce using rule 6 (statement -> MACRO .)
+    $end            reduce using rule 6 (statement -> MACRO .)
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+    operands                       shift and go to state 9
+    operand                        shift and go to state 10
+    expression                     shift and go to state 18
+
+state 5
+
+    (9) statement -> DIRECTIVE . operands
+    (12) operands -> . operands COMMA operand
+    (13) operands -> . operand
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+    operands                       shift and go to state 20
+    operand                        shift and go to state 10
+    expression                     shift and go to state 18
+
+state 6
+
+    (10) statement -> INSTRUCTION .
+    (11) statement -> INSTRUCTION . operands
+    (12) operands -> . operands COMMA operand
+    (13) operands -> . operand
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+    LABEL           reduce using rule 10 (statement -> INSTRUCTION .)
+    MACRO           reduce using rule 10 (statement -> INSTRUCTION .)
+    DIRECTIVE       reduce using rule 10 (statement -> INSTRUCTION .)
+    INSTRUCTION     reduce using rule 10 (statement -> INSTRUCTION .)
+    $end            reduce using rule 10 (statement -> INSTRUCTION .)
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+    operands                       shift and go to state 21
+    operand                        shift and go to state 10
+    expression                     shift and go to state 18
+
+state 7
+
+    (2) program -> program statement .
+
+    LABEL           reduce using rule 2 (program -> program statement .)
+    MACRO           reduce using rule 2 (program -> program statement .)
+    DIRECTIVE       reduce using rule 2 (program -> program statement .)
+    INSTRUCTION     reduce using rule 2 (program -> program statement .)
+    $end            reduce using rule 2 (program -> program statement .)
+
+
+state 8
+
+    (5) statement -> LABEL statement .
+
+    LABEL           reduce using rule 5 (statement -> LABEL statement .)
+    MACRO           reduce using rule 5 (statement -> LABEL statement .)
+    DIRECTIVE       reduce using rule 5 (statement -> LABEL statement .)
+    INSTRUCTION     reduce using rule 5 (statement -> LABEL statement .)
+    $end            reduce using rule 5 (statement -> LABEL statement .)
+
+
+state 9
+
+    (7) statement -> MACRO operands .
+    (8) statement -> MACRO operands . MACRO
+    (12) operands -> operands . COMMA operand
+
+  ! shift/reduce conflict for MACRO resolved as shift
+    LABEL           reduce using rule 7 (statement -> MACRO operands .)
+    DIRECTIVE       reduce using rule 7 (statement -> MACRO operands .)
+    INSTRUCTION     reduce using rule 7 (statement -> MACRO operands .)
+    $end            reduce using rule 7 (statement -> MACRO operands .)
+    MACRO           shift and go to state 22
+    COMMA           shift and go to state 23
+
+  ! MACRO           [ reduce using rule 7 (statement -> MACRO operands .) ]
+
+
+state 10
+
+    (13) operands -> operand .
+    (23) expression -> operand . MATH_EXPRESSION operands
+
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    MACRO           reduce using rule 13 (operands -> operand .)
+    COMMA           reduce using rule 13 (operands -> operand .)
+    LABEL           reduce using rule 13 (operands -> operand .)
+    DIRECTIVE       reduce using rule 13 (operands -> operand .)
+    INSTRUCTION     reduce using rule 13 (operands -> operand .)
+    $end            reduce using rule 13 (operands -> operand .)
+    MATH_EXPRESSION shift and go to state 24
+
+  ! MATH_EXPRESSION [ reduce using rule 13 (operands -> operand .) ]
+
+
+state 11
+
+    (14) operand -> QUOTED_CHARACTER .
+
+    MATH_EXPRESSION reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    MACRO           reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    COMMA           reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    LABEL           reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    DIRECTIVE       reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    INSTRUCTION     reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+    $end            reduce using rule 14 (operand -> QUOTED_CHARACTER .)
+
+
+state 12
+
+    (15) operand -> REGISTER .
+
+    MATH_EXPRESSION reduce using rule 15 (operand -> REGISTER .)
+    MACRO           reduce using rule 15 (operand -> REGISTER .)
+    COMMA           reduce using rule 15 (operand -> REGISTER .)
+    LABEL           reduce using rule 15 (operand -> REGISTER .)
+    DIRECTIVE       reduce using rule 15 (operand -> REGISTER .)
+    INSTRUCTION     reduce using rule 15 (operand -> REGISTER .)
+    $end            reduce using rule 15 (operand -> REGISTER .)
+
+
+state 13
+
+    (16) operand -> HEX .
+
+    MATH_EXPRESSION reduce using rule 16 (operand -> HEX .)
+    MACRO           reduce using rule 16 (operand -> HEX .)
+    COMMA           reduce using rule 16 (operand -> HEX .)
+    LABEL           reduce using rule 16 (operand -> HEX .)
+    DIRECTIVE       reduce using rule 16 (operand -> HEX .)
+    INSTRUCTION     reduce using rule 16 (operand -> HEX .)
+    $end            reduce using rule 16 (operand -> HEX .)
+
+
+state 14
+
+    (17) operand -> DECIMAL .
+
+    MATH_EXPRESSION reduce using rule 17 (operand -> DECIMAL .)
+    MACRO           reduce using rule 17 (operand -> DECIMAL .)
+    COMMA           reduce using rule 17 (operand -> DECIMAL .)
+    LABEL           reduce using rule 17 (operand -> DECIMAL .)
+    DIRECTIVE       reduce using rule 17 (operand -> DECIMAL .)
+    INSTRUCTION     reduce using rule 17 (operand -> DECIMAL .)
+    $end            reduce using rule 17 (operand -> DECIMAL .)
+
+
+state 15
+
+    (18) operand -> OCTAL .
+
+    MATH_EXPRESSION reduce using rule 18 (operand -> OCTAL .)
+    MACRO           reduce using rule 18 (operand -> OCTAL .)
+    COMMA           reduce using rule 18 (operand -> OCTAL .)
+    LABEL           reduce using rule 18 (operand -> OCTAL .)
+    DIRECTIVE       reduce using rule 18 (operand -> OCTAL .)
+    INSTRUCTION     reduce using rule 18 (operand -> OCTAL .)
+    $end            reduce using rule 18 (operand -> OCTAL .)
+
+
+state 16
+
+    (19) operand -> BINARY .
+
+    MATH_EXPRESSION reduce using rule 19 (operand -> BINARY .)
+    MACRO           reduce using rule 19 (operand -> BINARY .)
+    COMMA           reduce using rule 19 (operand -> BINARY .)
+    LABEL           reduce using rule 19 (operand -> BINARY .)
+    DIRECTIVE       reduce using rule 19 (operand -> BINARY .)
+    INSTRUCTION     reduce using rule 19 (operand -> BINARY .)
+    $end            reduce using rule 19 (operand -> BINARY .)
+
+
+state 17
+
+    (20) operand -> MEMORY_ADDRESS .
+
+    MATH_EXPRESSION reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    MACRO           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    COMMA           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    LABEL           reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    DIRECTIVE       reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    INSTRUCTION     reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+    $end            reduce using rule 20 (operand -> MEMORY_ADDRESS .)
+
+
+state 18
+
+    (21) operand -> expression .
+
+    MATH_EXPRESSION reduce using rule 21 (operand -> expression .)
+    MACRO           reduce using rule 21 (operand -> expression .)
+    COMMA           reduce using rule 21 (operand -> expression .)
+    LABEL           reduce using rule 21 (operand -> expression .)
+    DIRECTIVE       reduce using rule 21 (operand -> expression .)
+    INSTRUCTION     reduce using rule 21 (operand -> expression .)
+    $end            reduce using rule 21 (operand -> expression .)
+
+
+state 19
+
+    (24) operand -> MATH_EXPRESSION . operand
+    (22) expression -> MATH_EXPRESSION .
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    MACRO           reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    COMMA           reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    LABEL           reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    DIRECTIVE       reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    INSTRUCTION     reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    $end            reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+  ! MATH_EXPRESSION [ reduce using rule 22 (expression -> MATH_EXPRESSION .) ]
+
+    operand                        shift and go to state 25
+    expression                     shift and go to state 18
+
+state 20
+
+    (9) statement -> DIRECTIVE operands .
+    (12) operands -> operands . COMMA operand
+
+    LABEL           reduce using rule 9 (statement -> DIRECTIVE operands .)
+    MACRO           reduce using rule 9 (statement -> DIRECTIVE operands .)
+    DIRECTIVE       reduce using rule 9 (statement -> DIRECTIVE operands .)
+    INSTRUCTION     reduce using rule 9 (statement -> DIRECTIVE operands .)
+    $end            reduce using rule 9 (statement -> DIRECTIVE operands .)
+    COMMA           shift and go to state 23
+
+
+state 21
+
+    (11) statement -> INSTRUCTION operands .
+    (12) operands -> operands . COMMA operand
+
+    LABEL           reduce using rule 11 (statement -> INSTRUCTION operands .)
+    MACRO           reduce using rule 11 (statement -> INSTRUCTION operands .)
+    DIRECTIVE       reduce using rule 11 (statement -> INSTRUCTION operands .)
+    INSTRUCTION     reduce using rule 11 (statement -> INSTRUCTION operands .)
+    $end            reduce using rule 11 (statement -> INSTRUCTION operands .)
+    COMMA           shift and go to state 23
+
+
+state 22
+
+    (8) statement -> MACRO operands MACRO .
+
+    LABEL           reduce using rule 8 (statement -> MACRO operands MACRO .)
+    MACRO           reduce using rule 8 (statement -> MACRO operands MACRO .)
+    DIRECTIVE       reduce using rule 8 (statement -> MACRO operands MACRO .)
+    INSTRUCTION     reduce using rule 8 (statement -> MACRO operands MACRO .)
+    $end            reduce using rule 8 (statement -> MACRO operands MACRO .)
+
+
+state 23
+
+    (12) operands -> operands COMMA . operand
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+    operand                        shift and go to state 26
+    expression                     shift and go to state 18
+
+state 24
+
+    (23) expression -> operand MATH_EXPRESSION . operands
+    (12) operands -> . operands COMMA operand
+    (13) operands -> . operand
+    (14) operand -> . QUOTED_CHARACTER
+    (15) operand -> . REGISTER
+    (16) operand -> . HEX
+    (17) operand -> . DECIMAL
+    (18) operand -> . OCTAL
+    (19) operand -> . BINARY
+    (20) operand -> . MEMORY_ADDRESS
+    (21) operand -> . expression
+    (24) operand -> . MATH_EXPRESSION operand
+    (22) expression -> . MATH_EXPRESSION
+    (23) expression -> . operand MATH_EXPRESSION operands
+
+    QUOTED_CHARACTER shift and go to state 11
+    REGISTER        shift and go to state 12
+    HEX             shift and go to state 13
+    DECIMAL         shift and go to state 14
+    OCTAL           shift and go to state 15
+    BINARY          shift and go to state 16
+    MEMORY_ADDRESS  shift and go to state 17
+    MATH_EXPRESSION shift and go to state 19
+
+    operand                        shift and go to state 10
+    operands                       shift and go to state 27
+    expression                     shift and go to state 18
+
+state 25
+
+    (24) operand -> MATH_EXPRESSION operand .
+    (23) expression -> operand . MATH_EXPRESSION operands
+
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    MACRO           reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    COMMA           reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    LABEL           reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    DIRECTIVE       reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    INSTRUCTION     reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    $end            reduce using rule 24 (operand -> MATH_EXPRESSION operand .)
+    MATH_EXPRESSION shift and go to state 24
+
+  ! MATH_EXPRESSION [ reduce using rule 24 (operand -> MATH_EXPRESSION operand .) ]
+
+
+state 26
+
+    (12) operands -> operands COMMA operand .
+    (23) expression -> operand . MATH_EXPRESSION operands
+
+  ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
+    MACRO           reduce using rule 12 (operands -> operands COMMA operand .)
+    COMMA           reduce using rule 12 (operands -> operands COMMA operand .)
+    LABEL           reduce using rule 12 (operands -> operands COMMA operand .)
+    DIRECTIVE       reduce using rule 12 (operands -> operands COMMA operand .)
+    INSTRUCTION     reduce using rule 12 (operands -> operands COMMA operand .)
+    $end            reduce using rule 12 (operands -> operands COMMA operand .)
+    MATH_EXPRESSION shift and go to state 24
+
+  ! MATH_EXPRESSION [ reduce using rule 12 (operands -> operands COMMA operand .) ]
+
+
+state 27
+
+    (23) expression -> operand MATH_EXPRESSION operands .
+    (12) operands -> operands . COMMA operand
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    MATH_EXPRESSION reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    MACRO           reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    LABEL           reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    DIRECTIVE       reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    INSTRUCTION     reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    $end            reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .)
+    COMMA           shift and go to state 23
+
+  ! COMMA           [ reduce using rule 23 (expression -> operand MATH_EXPRESSION operands .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LABEL in state 0 resolved as shift
+WARNING: shift/reduce conflict for MACRO in state 0 resolved as shift
+WARNING: shift/reduce conflict for DIRECTIVE in state 0 resolved as shift
+WARNING: shift/reduce conflict for INSTRUCTION in state 0 resolved as shift
+WARNING: shift/reduce conflict for LABEL in state 3 resolved as shift
+WARNING: shift/reduce conflict for MACRO in state 3 resolved as shift
+WARNING: shift/reduce conflict for DIRECTIVE in state 3 resolved as shift
+WARNING: shift/reduce conflict for INSTRUCTION in state 3 resolved as shift
+WARNING: shift/reduce conflict for MACRO in state 9 resolved as shift
+WARNING: shift/reduce conflict for MATH_EXPRESSION in state 10 resolved as shift
+WARNING: shift/reduce conflict for MATH_EXPRESSION in state 19 resolved as shift
+WARNING: shift/reduce conflict for MATH_EXPRESSION in state 25 resolved as shift
+WARNING: shift/reduce conflict for MATH_EXPRESSION in state 26 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 27 resolved as shift

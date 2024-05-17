@@ -103,7 +103,7 @@ def write_hex_file(in_hex_file_path, in_hex_code):
 
 
 def test_assemble_i8080_asm_file():
-    given_path = '../example_asm/'
+    given_path = '../../example_asm/'
     asm_file = '8080_fp16.ASM'
     hex_file = 'new_8080_fp16.HEX'
     asm_file_path = given_path + asm_file
