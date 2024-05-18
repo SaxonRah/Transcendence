@@ -8,9 +8,9 @@ Rule 2     program -> program statement
 Rule 3     program -> statement
 Rule 4     statement -> LABEL
 Rule 5     statement -> LABEL statement
-Rule 6     statement -> MACRO
+Rule 6     statement -> MACRO operands MACRO
 Rule 7     statement -> MACRO operands
-Rule 8     statement -> MACRO operands MACRO
+Rule 8     statement -> MACRO
 Rule 9     statement -> DIRECTIVE operands
 Rule 10    statement -> INSTRUCTION
 Rule 11    statement -> INSTRUCTION operands
@@ -24,7 +24,7 @@ Rule 18    operand -> OCTAL
 Rule 19    operand -> BINARY
 Rule 20    operand -> MEMORY_ADDRESS
 Rule 21    operand -> expression
-Rule 22    expression -> MATH_EXPRESSION
+Rule 22    operand -> MATH_EXPRESSION
 Rule 23    expression -> operand MATH_EXPRESSION operands
 Rule 24    operand -> MATH_EXPRESSION operand
 
@@ -37,7 +37,7 @@ DIRECTIVE            : 9
 HEX                  : 16
 INSTRUCTION          : 10 11
 LABEL                : 4 5
-MACRO                : 6 7 8 8
+MACRO                : 6 6 7 8
 MATH_EXPRESSION      : 22 23 24
 MEMORY_ADDRESS       : 20
 OCTAL                : 18
@@ -49,7 +49,7 @@ Nonterminals, with rules where they appear
 
 expression           : 21
 operand              : 12 13 23 24
-operands             : 7 8 9 11 12 23
+operands             : 6 7 9 11 12 23
 program              : 2 0
 statement            : 2 3 5
 
@@ -63,9 +63,9 @@ state 0
     (3) program -> . statement
     (4) statement -> . LABEL
     (5) statement -> . LABEL statement
-    (6) statement -> . MACRO
+    (6) statement -> . MACRO operands MACRO
     (7) statement -> . MACRO operands
-    (8) statement -> . MACRO operands MACRO
+    (8) statement -> . MACRO
     (9) statement -> . DIRECTIVE operands
     (10) statement -> . INSTRUCTION
     (11) statement -> . INSTRUCTION operands
@@ -94,9 +94,9 @@ state 1
     (2) program -> program . statement
     (4) statement -> . LABEL
     (5) statement -> . LABEL statement
-    (6) statement -> . MACRO
+    (6) statement -> . MACRO operands MACRO
     (7) statement -> . MACRO operands
-    (8) statement -> . MACRO operands MACRO
+    (8) statement -> . MACRO
     (9) statement -> . DIRECTIVE operands
     (10) statement -> . INSTRUCTION
     (11) statement -> . INSTRUCTION operands
@@ -125,9 +125,9 @@ state 3
     (5) statement -> LABEL . statement
     (4) statement -> . LABEL
     (5) statement -> . LABEL statement
-    (6) statement -> . MACRO
+    (6) statement -> . MACRO operands MACRO
     (7) statement -> . MACRO operands
-    (8) statement -> . MACRO operands MACRO
+    (8) statement -> . MACRO
     (9) statement -> . DIRECTIVE operands
     (10) statement -> . INSTRUCTION
     (11) statement -> . INSTRUCTION operands
@@ -151,9 +151,9 @@ state 3
 
 state 4
 
-    (6) statement -> MACRO .
+    (6) statement -> MACRO . operands MACRO
     (7) statement -> MACRO . operands
-    (8) statement -> MACRO . operands MACRO
+    (8) statement -> MACRO .
     (12) operands -> . operands COMMA operand
     (13) operands -> . operand
     (14) operand -> . QUOTED_CHARACTER
@@ -164,15 +164,15 @@ state 4
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
-    LABEL           reduce using rule 6 (statement -> MACRO .)
-    MACRO           reduce using rule 6 (statement -> MACRO .)
-    DIRECTIVE       reduce using rule 6 (statement -> MACRO .)
-    INSTRUCTION     reduce using rule 6 (statement -> MACRO .)
-    $end            reduce using rule 6 (statement -> MACRO .)
+    LABEL           reduce using rule 8 (statement -> MACRO .)
+    MACRO           reduce using rule 8 (statement -> MACRO .)
+    DIRECTIVE       reduce using rule 8 (statement -> MACRO .)
+    INSTRUCTION     reduce using rule 8 (statement -> MACRO .)
+    $end            reduce using rule 8 (statement -> MACRO .)
     QUOTED_CHARACTER shift and go to state 11
     REGISTER        shift and go to state 12
     HEX             shift and go to state 13
@@ -199,8 +199,8 @@ state 5
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
     QUOTED_CHARACTER shift and go to state 11
@@ -230,8 +230,8 @@ state 6
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
     LABEL           reduce using rule 10 (statement -> INSTRUCTION .)
@@ -276,16 +276,16 @@ state 8
 
 state 9
 
+    (6) statement -> MACRO operands . MACRO
     (7) statement -> MACRO operands .
-    (8) statement -> MACRO operands . MACRO
     (12) operands -> operands . COMMA operand
 
   ! shift/reduce conflict for MACRO resolved as shift
+    MACRO           shift and go to state 22
     LABEL           reduce using rule 7 (statement -> MACRO operands .)
     DIRECTIVE       reduce using rule 7 (statement -> MACRO operands .)
     INSTRUCTION     reduce using rule 7 (statement -> MACRO operands .)
     $end            reduce using rule 7 (statement -> MACRO operands .)
-    MACRO           shift and go to state 22
     COMMA           shift and go to state 23
 
   ! MACRO           [ reduce using rule 7 (statement -> MACRO operands .) ]
@@ -414,8 +414,8 @@ state 18
 
 state 19
 
+    (22) operand -> MATH_EXPRESSION .
     (24) operand -> MATH_EXPRESSION . operand
-    (22) expression -> MATH_EXPRESSION .
     (14) operand -> . QUOTED_CHARACTER
     (15) operand -> . REGISTER
     (16) operand -> . HEX
@@ -424,17 +424,17 @@ state 19
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
   ! shift/reduce conflict for MATH_EXPRESSION resolved as shift
-    MACRO           reduce using rule 22 (expression -> MATH_EXPRESSION .)
-    COMMA           reduce using rule 22 (expression -> MATH_EXPRESSION .)
-    LABEL           reduce using rule 22 (expression -> MATH_EXPRESSION .)
-    DIRECTIVE       reduce using rule 22 (expression -> MATH_EXPRESSION .)
-    INSTRUCTION     reduce using rule 22 (expression -> MATH_EXPRESSION .)
-    $end            reduce using rule 22 (expression -> MATH_EXPRESSION .)
+    MACRO           reduce using rule 22 (operand -> MATH_EXPRESSION .)
+    COMMA           reduce using rule 22 (operand -> MATH_EXPRESSION .)
+    LABEL           reduce using rule 22 (operand -> MATH_EXPRESSION .)
+    DIRECTIVE       reduce using rule 22 (operand -> MATH_EXPRESSION .)
+    INSTRUCTION     reduce using rule 22 (operand -> MATH_EXPRESSION .)
+    $end            reduce using rule 22 (operand -> MATH_EXPRESSION .)
     QUOTED_CHARACTER shift and go to state 11
     REGISTER        shift and go to state 12
     HEX             shift and go to state 13
@@ -444,7 +444,7 @@ state 19
     MEMORY_ADDRESS  shift and go to state 17
     MATH_EXPRESSION shift and go to state 19
 
-  ! MATH_EXPRESSION [ reduce using rule 22 (expression -> MATH_EXPRESSION .) ]
+  ! MATH_EXPRESSION [ reduce using rule 22 (operand -> MATH_EXPRESSION .) ]
 
     operand                        shift and go to state 25
     expression                     shift and go to state 18
@@ -477,13 +477,13 @@ state 21
 
 state 22
 
-    (8) statement -> MACRO operands MACRO .
+    (6) statement -> MACRO operands MACRO .
 
-    LABEL           reduce using rule 8 (statement -> MACRO operands MACRO .)
-    MACRO           reduce using rule 8 (statement -> MACRO operands MACRO .)
-    DIRECTIVE       reduce using rule 8 (statement -> MACRO operands MACRO .)
-    INSTRUCTION     reduce using rule 8 (statement -> MACRO operands MACRO .)
-    $end            reduce using rule 8 (statement -> MACRO operands MACRO .)
+    LABEL           reduce using rule 6 (statement -> MACRO operands MACRO .)
+    MACRO           reduce using rule 6 (statement -> MACRO operands MACRO .)
+    DIRECTIVE       reduce using rule 6 (statement -> MACRO operands MACRO .)
+    INSTRUCTION     reduce using rule 6 (statement -> MACRO operands MACRO .)
+    $end            reduce using rule 6 (statement -> MACRO operands MACRO .)
 
 
 state 23
@@ -497,8 +497,8 @@ state 23
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
     QUOTED_CHARACTER shift and go to state 11
@@ -526,8 +526,8 @@ state 24
     (19) operand -> . BINARY
     (20) operand -> . MEMORY_ADDRESS
     (21) operand -> . expression
+    (22) operand -> . MATH_EXPRESSION
     (24) operand -> . MATH_EXPRESSION operand
-    (22) expression -> . MATH_EXPRESSION
     (23) expression -> . operand MATH_EXPRESSION operands
 
     QUOTED_CHARACTER shift and go to state 11
