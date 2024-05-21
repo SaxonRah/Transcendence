@@ -55,6 +55,24 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
          - 🎆🎆🎆Now I can focus on translating the AST into ARMv6-M ISA. 🎆🎆🎆
             - I might work on 8085/8086 for a bit before I move on to translation.
 
+- M0+ Floating Point Math - m0plus_fp16_fp32.asm
+   - Never been assembled, pure theoretical garbage.
+   - See fp1632.s in pico/pico-asm-main/source/floatingpoint for a "real" implementation.
+
+- M0+ OS - arm_os.asm
+   - Initial theory file. Never been assembled, pure theoretical garbage.
+
+- PLY Backtracking & Non-Backtracking
+   - Started to develop a backtracking parser for AST generation. Leaving in repo for historical sake.
+   - Terrible very very terrible garbage.
+   - Just use a post-processing pass after the non-backtracking parser.
+
+- VSCode Pico ASM PRJ + fp1632.s
+   - CMake C/ASM/Cxx VSCode example project from https://blog.smittytone.net aka Tony Smith.
+   - Contains fp1632.s in pico/pico-asm-main/source/floatingpoint
+   - fp1632.s Has been assembled with the arm-de1soc simulator on https://cpulator.01xz.net/
+   - No it has not been tested or assembled with a real assembler.
+
 ## Features Desired
 1. **Translation from Intel 8080 Assembly to Arm M0+ Assembly:**
    - Convert Intel 8080 assembly language instructions to equivalent Arm M0+ assembly instructions.
