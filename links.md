@@ -1,6 +1,6 @@
 # CP/M
 ## https://www.seasip.info/Cpm/index.html
-  - Pretty complete CP/M information.
+  - Pretty complete CP/M and GSX information.
   - CP/M - BIOS/BDOS + GSX - GIOS/GDOS
 
 # 8080 / 8085 / 8086 / Z80
