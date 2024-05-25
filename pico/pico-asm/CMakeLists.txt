@@ -5,23 +5,11 @@ set(PROJECT_NAME "RP2040_ASM_PROJECT")
 set(BUILD_NUMBER "0")
 
 # Set app name(s) and version(s)
-set(APP_1_NAME "LED_SDK")
-set(APP_1_VERSION_NUMBER "1.2.0")
-
-set(APP_2_NAME "MISC_OPS")
-set(APP_2_VERSION_NUMBER "1.2.0")
-
-set(APP_3_NAME "I2C_DEMO")
-set(APP_3_VERSION_NUMBER "1.2.0")
-
-set(APP_4_NAME "fp1632_demo")
-set(APP_4_VERSION_NUMBER "0.0.0")
+set(APP_1_NAME "fp1632_demo")
+set(APP_1_VERSION_NUMBER "0.0.0")
 
 # Specify the app(s) source code
-set(APP_1_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/asm_led_sdk")
-set(APP_2_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/asm_ops")
-set(APP_3_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/asm_i2c")
-set(APP_4_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/floatingpoint")
+set(APP_1_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/floatingpoint")
 
 # Set the common code source directory
 set(COMMON_SRC_DIRECTORY "${CMAKE_SOURCE_DIR}/source/common")
@@ -45,6 +33,3 @@ pico_sdk_init()
 
 # Include app source code directories
 add_subdirectory(${APP_1_SRC_DIRECTORY})
-add_subdirectory(${APP_2_SRC_DIRECTORY})
-add_subdirectory(${APP_3_SRC_DIRECTORY})
-add_subdirectory(${APP_4_SRC_DIRECTORY})
