@@ -1,9 +1,12 @@
 # internal tools
 .tools
 
+# pycharm crap
+.idea
+
+# pico stuff
 pico/pimoronipico_hw
 
-# pico-asm build folder
 pico/pico-asm/build
 
 # Byte-compiled / optimized / DLL files
