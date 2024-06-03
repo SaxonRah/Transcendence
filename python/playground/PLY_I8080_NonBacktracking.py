@@ -400,5 +400,34 @@ def test_i8080_lexer_parser():
     test_fp16()
 
 
+
+from PostProcessing_AST_Traversal_Translator import *
+
+
+def test_postprocessing_ast_traversal_translator():
+    file_path = "example_asm/8080_fp16.ASM"
+    print(f"\nTesting with {file_path} :")
+    fp16_file = None
+    try:
+        with open(file_path, 'r') as asm_file:
+            fp16_file = asm_file.read()
+    except Exception as e:
+        print(e)
+    if fp16_file is not None:
+
+        lexer = I8080Lexer()
+        lexer.build()
+        parser = I8080Parser()
+        parser.build()
+        print("Translation---------------------------------------------------------------------------------Translation")
+        generated_ast = parser.parse(fp16_file)
+        thumb_code = translate_ast_to_thumb(generated_ast)
+        write_thumb_code_to_file(thumb_code)
+        print("Translation complete. Check the THUMB_TRANSLATED.S file.")
+    else:
+        print("Translation received 'None'.")
+
+
 if __name__ == "__main__":
-    test_i8080_lexer_parser()
+    # test_i8080_lexer_parser()
+    test_postprocessing_ast_traversal_translator()
