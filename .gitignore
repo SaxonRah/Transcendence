@@ -1,6 +1,8 @@
 # internal tools
 .tools
 
+pico/pimoronipico_hw
+
 # pico-asm build folder
 pico/pico-asm/build
 

@@ -78,7 +78,8 @@ class I8080Lexer:
         return t
 
     def t_MATH_EXPRESSION(self, t):
-        r'([+\-])'
+        # r'([+\-])'
+        r'[+\-]'
         return t
 
     def t_REGISTER(self, t):
@@ -107,7 +108,8 @@ class I8080Lexer:
         return t
 
     def t_COMMA(self, t):
-        r'[,]'
+        # r'[,]'
+        r','
         return t
 
     def t_MEMORY_ADDRESS(self, t):
@@ -159,51 +161,53 @@ class I8080Parser:
     #  ('LABEL2', 'XCHG'),
     #  ('CALL', 'F16NEG')]
 
+
     def p_statement_label(self, p):
         'statement : LABEL'
-        p[0] = p[1]
+        p[0] = ('LABEL', p[1])
 
     def p_statement_label_statement(self, p):
         'statement : LABEL statement'
-        p[0] = p[1], p[2]
+        p[0] = ('LABEL', p[1], p[2])
 
     def p_statement_macro(self, p):
         'statement : MACRO'
-        p[0] = p[1]
+        p[0] = ('MACRO', p[1])
 
     def p_statement_macro_operands(self, p):
         'statement : MACRO operands'
-        p[0] = p[1], p[2]
+        p[0] = ('MACRO', p[1], p[2])
 
     def p_statement_macro_operands_macro(self, p):
         'statement : MACRO operands MACRO'
-        p[0] = p[1], p[2], p[3]
+        p[0] = ('MACRO', p[1], p[2], p[3])
 
     def p_statement_directive_operands(self, p):
         'statement : DIRECTIVE operands'
-        p[0] = p[1], p[2]
+        p[0] = ('DIRECTIVE', p[1], p[2])
 
     def p_statement_instruction(self, p):
         'statement : INSTRUCTION'
-        p[0] = p[1]
+        p[0] = ('INSTRUCTION', p[1])
 
     def p_statement_instruction_operands(self, p):
         'statement : INSTRUCTION operands'
-        p[0] = p[1], p[2]
+        p[0] = ('INSTRUCTION', p[1], p[2])
 
     def p_operands_comma_operand(self, p):
         'operands : operands COMMA operand'
         #  p[0] = p[1], p[2], p[3]
         #  p[0] = p[1], p[3]
-        # TODO: Create list/tuple of operands like:
+        # DONE: Create list/tuple of operands like:
         #  ('16', '-', 'F16MB', '+', '1')
         #  instead of:
         #  ('16', '-', ('F16MB', '+', '1'))
         #  SEEMS TO WORK FOR NOW
+        # ('INSTRUCTION', 'MVI', ('C', ('16', '-', 'F16MB', '+', '1')))
         if isinstance(p[1], tuple):
             p[0] = p[1] + (p[3],)
         else:
-            p[0] = p[1], p[3]
+            p[0] = (p[1], p[3])
 
 
     def p_operands_operand(self, p):
@@ -249,15 +253,17 @@ class I8080Parser:
 
     def p_expression_operand_math_expression_operands(self, p):
         'expression : operand MATH_EXPRESSION operands'
-        # p[0] = p[1], p[2], p[3]
-        # TODO: Create list/tuple of operands like:
+        # DONE: Create list/tuple of operands like:
         #  ('LXI', ('H', ('1', '+', "'+'", '+', "'-'", '-', '1')))
         #  instead of:
         #  ('LXI', ('H', ('1', '+', ("'+'", '+', ("'-'", '-', '1')))))
-        if isinstance(p[1], tuple) or isinstance(p[3], tuple):
-            p[0] = (p[1],) + (p[2],) + (p[3],)
-        else:
-            p[0] = (p[1], p[2], p[3])
+        #       It now properly adds all mathematical expressions into a single tuple.
+        #       ('INSTRUCTION', 'LXI', ('H', ('1', '+', "'+'", '+', "'-'", '-', '1')))
+        #       ('INSTRUCTION', 'LXI', ('H', ('1', '+', "'+'", '+', "'-'", '-', '1')))
+        #       ('INSTRUCTION', 'LXI', ('H', ('1', '-', "'-'", '-', "'+'", '+', '1')))
+        #       ('INSTRUCTION', 'LXI', ('H', ('1', '-', "'-'", '-', "'+'", '+', '1')))
+        #       ('INSTRUCTION', 'LXI', ('H', ('1', '-', "'-'", '-', "'+'", '+', '1')))
+        p[0] = (p[1], p[2]) + (p[3] if isinstance(p[3], tuple) else (p[3],))
 
     def p_operand_math_expression_operand(self, p):
         'operand : MATH_EXPRESSION operand'
