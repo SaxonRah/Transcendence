@@ -29,8 +29,9 @@ Current specification is located here -> [Handling Differences a Specification](
    - Going forward, I will make an effort to follow this. The current playground doesn't follow this.
 
 ## Playground
-You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder. This is where I try out ideas/work on designing the specification and Transcendence.
-
+You will find Intel 8080 assembly and PL/M regex patterns with subsequent pattern matching in the playground folder.  
+This is where I try out ideas/work on designing the specification and Transcendence.
+#### Playground History
 - CP/M 2.2 in PL/M is completely pattern matched and PL/M has a complete set of regexes.
    - Looking for more PL/M code to test.
 - Intel 8080 assembly has a complete set of regexes.
@@ -54,6 +55,11 @@ You will find Intel 8080 assembly and PL/M regex patterns with subsequent patter
          - 8080_fp16.ASM is a 8080 assembly implmentation of floating point math by Vitaly Lunyov.
          - 🎆🎆🎆Now I can focus on translating the AST into ARMv6-M ISA. 🎆🎆🎆
             - I might work on 8085/8086 for a bit before I move on to translation.
+               - Nah, I will try and fully translate I8080 to ARM THUMB before this, as the changes shouldn't be that major for 8085/8086.
+      - Updated PLY lexer and parser to a decent status.
+         - [PLY_I8080_NonBacktracking.py](/python/playground/PLY_I8080_NonBacktracking.py)
+      - Created a baseline translation layer.
+         - [PostProcessing_AST_Traversal_Translator.py](/python/playground/PostProcessing_AST_Traversal_Translator.py)
 
 - M0+ Floating Point Math - m0plus_fp16_fp32.asm
    - Never been assembled, pure theoretical garbage.
