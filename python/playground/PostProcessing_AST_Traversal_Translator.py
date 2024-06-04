@@ -1,42 +1,28 @@
-# Define the translation rules from 8080 to THUMB
-translation_rules = {
-    'MOV': 'MOV',
-    'ADD': 'ADD',
-    'SUB': 'SUB',
-    'INR': 'ADD',   # Example: INR can be translated to ADD with an immediate value of 1
-    'DCR': 'SUB',   # Example: DCR can be translated to SUB with an immediate value of 1
-    'MVI': 'MOV',
-    'LXI': 'LDR',   # Load Register (LDR) with an immediate value
-    'HLT': 'B .',   # HLT can be translated to an infinite loop in THUMB
-    'CALL': 'BL',   # Branch with Link for subroutine calls
-    'RET': 'BX LR'  # Return from subroutine
-    # Add other translations as needed
-}
+# Define the combined mapping provided
+from maps.I8080_M0Plus_Mappings import combined_mapping
 
 
 def translate_instruction(instruction, operands):
     # Translate the instruction and its operands
-    thumb_instruction = translation_rules.get(instruction, None)
+    thumb_instruction = combined_mapping.get(instruction, None)
     if not thumb_instruction:
         return f"; Unsupported instruction {instruction}"
 
-    # Handling different instructions
-    if instruction == 'INR':
+    # Handling specific cases with operands
+    if instruction in ['INR', 'DCR', 'ADD', 'SUB', 'CMP', 'AND', 'EOR', 'ORR', 'MVN', 'ROR']:
         return f"{thumb_instruction} {operands[0]}, {operands[0]}, #1"
-    elif instruction == 'DCR':
-        return f"{thumb_instruction} {operands[0]}, {operands[0]}, #1"
-    elif instruction == 'MOV':
-        return f"{thumb_instruction} {operands[0]}, {operands[1]}"
     elif instruction == 'MVI':
         return f"{thumb_instruction} {operands[0]}, #{operands[1]}"
     elif instruction == 'LXI':
         return f"{thumb_instruction} {operands[0]}, ={operands[1]}"
-    elif instruction == 'HLT':
-        return f"{thumb_instruction}"
-    elif instruction == 'CALL':
+    elif instruction == 'LDA':
+        return f"{thumb_instruction.replace('[ADR]', f'[{operands[0]}]')}"
+    elif instruction == 'STA':
+        return f"{thumb_instruction.replace('[ADR]', f'[{operands[0]}]')}"
+    elif instruction in ['PUSH', 'POP']:
+        return f"{thumb_instruction} {{{operands[0]}}}"
+    elif instruction in ['JMP', 'JC', 'JNC', 'JM', 'JZ', 'JNZ', 'JP', 'CALL', 'CC', 'CNC', 'CP', 'CM', 'CZ', 'CNZ']:
         return f"{thumb_instruction} {operands[0]}"
-    elif instruction == 'RET':
-        return f"{thumb_instruction}"
 
     # Default translation for simple mapping
     if len(operands) == 1:
@@ -96,5 +82,5 @@ def test_translator():
 
 if __name__ == "__main__":
     ...
-    # test_translator()
+    test_translator()
     # TODO Create Testing System

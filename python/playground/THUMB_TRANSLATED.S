@@ -1,5 +1,5 @@
 ; Directive ORG 1, 0, 0, H
-; Unsupported instruction JMP
+B F
 FADD:
 FSUB:
 FMUL:
@@ -20,481 +20,481 @@ F16FDL:
 F16SUB:
 BL F
 F16ADD:
-; Unsupported instruction ANA
-; Unsupported instruction ORA
+AND D
+ORR E
 ; Unsupported instruction RZ
-; Unsupported instruction XCHG
+; Error translating instruction XCHG
 MOV A, #('F16SM', '-', '1')
-; Unsupported instruction ANA
-; Unsupported instruction ORA
+AND D
+ORR E
 ; Unsupported instruction RZ
-; Unsupported instruction PUSH
+PUSH {H}
 MOV A, H
-; Unsupported instruction XRA
+EOR D
 MOV L, A
-; Unsupported instruction XTHL
+; Error translating instruction XTHL
 BL F
-SUB C
-; Unsupported instruction JNC
+SUB C, C, #1
+BCC F
 MOV B, C
-; Unsupported instruction CMA
+; Error translating instruction CMA
 ADD A, A, #1
 MOV C, A
-; Unsupported instruction XCHG
-; Unsupported instruction XTHL
+; Error translating instruction XCHG
+; Error translating instruction XTHL
 MOV A, H
-; Unsupported instruction XRA
+EOR L
 MOV H, A
-; Unsupported instruction XTHL
+; Error translating instruction XTHL
 MOV A, C
 F16A1:
 MOV C, A
 BL D
-; Unsupported instruction POP
+POP {P}
 MOV C, A
-; Unsupported instruction CM
-; Unsupported instruction DAD
+BMI N
+ADD D
 MOV D, C
-; Unsupported instruction JP
-; Unsupported instruction JC
+B F
+BCS F
 BL N
 MOV A, #F16SM
-; Unsupported instruction XRA
+EOR D
 MOV D, A
 F16NRP:
 ; Unsupported instruction RC
 F16PCK:
-; Unsupported instruction ANA
+AND H
 MOV H, A
 MOV A, B
-; Unsupported instruction RLC
-; Unsupported instruction RLC
-; Unsupported instruction CPI
-; Unsupported instruction JNC
-; Unsupported instruction ORA
+; Error translating instruction RLC
+; Error translating instruction RLC
+; Error translating instruction CPI
+BCC F
+ORR H
 MOV H, A
 F16SGN:
-; Unsupported instruction ANA
-; Unsupported instruction ORA
+AND D
+ORR H
 MOV H, A
-BX LR
+; Unsupported instruction RET
 F16UNP:
 BL F
 MOV C, B
-; Unsupported instruction XCHG
+; Error translating instruction XCHG
 F16UPH:
-; Unsupported instruction ANA
-; Unsupported instruction RRC
-; Unsupported instruction RRC
+AND H
+; Error translating instruction RRC
+; Error translating instruction RRC
 MOV B, A
 MOV A, #F16MM
-; Unsupported instruction ANA
-; Unsupported instruction ORI
+AND H
+; Error translating instruction ORI
 MOV H, A
 MOV A, B
-; Unsupported instruction ORA
+ORR A
 ; Unsupported instruction RNZ
 MOV A, #F16MI1
-; Unsupported instruction XRA
+EOR H
 MOV H, A
 MOV A, B
-BX LR
+; Unsupported instruction RET
 F16DNP:
-LDR H, =F16PCK
-; Unsupported instruction XTHL
+LDR R2, [ADR], STR R2, [DE] H, =F16PCK
+; Error translating instruction XTHL
 MOV A, #('F16MI1', '+', 'F16MI1')
-; Unsupported instruction ANA
+AND H
 ; Unsupported instruction RZ
 DIV2X2:
 DIV2X1:
 DIV2XC:
-; Unsupported instruction ORA
+ORR A
 ; Unsupported instruction RZ
-; Unsupported instruction CPI
-; Unsupported instruction JNC
+; Error translating instruction CPI
+BCC F
 DIV2C1:
-; Unsupported instruction ORA
-; Unsupported instruction RAR
+ORR A
+; Error translating instruction RAR
 MOV H, A
 MOV A, L
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV L, A
 SUB C, C, #1
-; Unsupported instruction JNZ
+BNE D
 ; Unsupported instruction RNC
-; Unsupported instruction INX
+ADD H
 MOV A, #('F16MI1', '+', 'F16MI1')
-; Unsupported instruction ANA
+AND H
 ; Unsupported instruction RZ
-; Unsupported instruction JMP
+B D
 F16NRM:
-; Unsupported instruction ORA
+ORR L
 ; Unsupported instruction STC
 ; Unsupported instruction RZ
 MOV A, B
-; Unsupported instruction ORA
+ORR A
 ; Unsupported instruction RZ
 F16N1:
-; Unsupported instruction ANA
+AND H
 ; Unsupported instruction RNZ
-; Unsupported instruction DAD
+ADD H
 SUB B, B, #1
-; Unsupported instruction JNZ
-BX LR
+BNE F
+; Unsupported instruction RET
 F16MUL:
-; Unsupported instruction ANA
-; Unsupported instruction ORA
+AND H
+ORR L
 ; Unsupported instruction RZ
-; Unsupported instruction XCHG
+; Error translating instruction XCHG
 MOV A, #('F16SM', '-', '1')
-; Unsupported instruction ANA
-; Unsupported instruction ORA
+AND H
+ORR L
 ; Unsupported instruction RZ
 MOV A, H
-; Unsupported instruction XRA
-; Unsupported instruction PUSH
+EOR D
+PUSH {P}
 BL F
-ADD C
-; Unsupported instruction SUI
-; Unsupported instruction JC
-; Unsupported instruction JZ
-; Unsupported instruction CPI
-; Unsupported instruction JNC
-; Unsupported instruction PUSH
+ADD C, C, #1
+; Error translating instruction SUI
+BCS F
+BEQ F
+; Error translating instruction CPI
+BCC F
+PUSH {P}
 MOV B, H
 MOV C, L
-LDR H, =0
+LDR R2, [ADR], STR R2, [DE] H, =0
 MOV A, #F16MB
 F16M1:
 MOV A, H
-; Unsupported instruction ORA
-; Unsupported instruction RAR
+ORR A
+; Error translating instruction RAR
 MOV H, A
 MOV A, L
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV L, A
 MOV A, B
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV B, A
 MOV A, C
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV C, A
-; Unsupported instruction JNC
-; Unsupported instruction DAD
+BCC F
+ADD D
 F16M2:
 SUB A, A, #1
-; Unsupported instruction JNZ
-; Unsupported instruction POP
-; Unsupported instruction POP
-; Unsupported instruction JMP
+BNE F
+POP {B}
+POP {D}
+B F
 F16DIV:
-; Unsupported instruction XRA
-; Unsupported instruction PUSH
+EOR D
+PUSH {P}
 MOV A, #('F16SM', '-', '1')
-; Unsupported instruction ANA
-; Unsupported instruction ORA
-; Unsupported instruction JZ
+AND D
+ORR E
+BEQ F
 MOV A, #('F16SM', '-', '1')
-; Unsupported instruction ANA
-; Unsupported instruction ORA
-; Unsupported instruction JZ
+AND H
+ORR L
+BEQ F
 BL F
-SUB C
-; Unsupported instruction ADI
-; Unsupported instruction JM
-; Unsupported instruction JZ
-; Unsupported instruction CPI
-; Unsupported instruction JNC
-; Unsupported instruction PUSH
+SUB C, C, #1
+; Error translating instruction ADI
+BMI F
+BEQ F
+; Error translating instruction CPI
+BCC F
+PUSH {P}
 BL F
-; Unsupported instruction JNC
-; Unsupported instruction DAD
-; Unsupported instruction XTHL
+BCC F
+ADD H
+; Error translating instruction XTHL
 SUB H, H, #1
-; Unsupported instruction XTHL
+; Error translating instruction XTHL
 F16D3:
 BL N
 MOV A, #('F16MB', '+', '1')
-LDR B, =0
+LDR R2, [ADR], STR R2, [DE] B, =0
 F16D1:
-; Unsupported instruction PUSH
-; Unsupported instruction DAD
-; Unsupported instruction JNC
-; Unsupported instruction XCHG
+PUSH {H}
+ADD D
+BCC F
+; Error translating instruction XCHG
 F16D2:
 MOV A, C
-; Unsupported instruction RAL
+; Error translating instruction RAL
 MOV C, A
 MOV A, B
-; Unsupported instruction RAL
+; Error translating instruction RAL
 MOV B, A
-; Unsupported instruction XCHG
-; Unsupported instruction DAD
-; Unsupported instruction XCHG
-; Unsupported instruction POP
+; Error translating instruction XCHG
+ADD H
+; Error translating instruction XCHG
+POP {P}
 SUB A, A, #1
-; Unsupported instruction JNZ
+BNE F
 MOV H, B
 MOV L, C
-; Unsupported instruction POP
-; Unsupported instruction POP
+POP {B}
+POP {D}
 MOV A, #('F16MI1', '+', 'F16MI1')
-; Unsupported instruction ANA
-; Unsupported instruction CNZ
-; Unsupported instruction JMP
+AND H
+BNE D
+B F
 F16SQR:
 F16RND:
 F16ABS:
-; Unsupported instruction ORA
+ORR A
 ; Unsupported instruction RP
 F16NEG:
-; Unsupported instruction XRA
+EOR H
 MOV H, A
-BX LR
+; Unsupported instruction RET
 F16CMP:
-; Unsupported instruction ANA
+AND D
 MOV B, A
 MOV A, #F16EM
-; Unsupported instruction ANA
-; Unsupported instruction CMP
+AND H
+CMP B, B, #1
 ; Unsupported instruction RNZ
 F16CPM:
-; Unsupported instruction ANA
+AND D
 MOV B, A
 MOV A, #F16MM
-; Unsupported instruction ANA
-; Unsupported instruction CMP
+AND H
+CMP B, B, #1
 ; Unsupported instruction RNZ
 MOV A, L
-; Unsupported instruction CMP
-BX LR
+CMP E, E, #1
+; Unsupported instruction RET
 F16OFL:
 F16INF:
 MOV L, #0
-; Unsupported instruction JMP
+B F
 F16ZRS:
 F16ZRO:
-BX LR
+; Unsupported instruction RET
 F16INT:
-LDR H, =0
+LDR R2, [ADR], STR R2, [DE] H, =0
 MOV A, #F16EM
-; Unsupported instruction ANA
-; Unsupported instruction RRC
-; Unsupported instruction RRC
-; Unsupported instruction SUI
+AND D
+; Error translating instruction RRC
+; Error translating instruction RRC
+; Error translating instruction SUI
 ; Unsupported instruction RC
 ADD A, A, #1
 MOV B, A
 MOV A, #F16MI1
-; Unsupported instruction ORA
+ORR D
 MOV D, A
-; Unsupported instruction PUSH
+PUSH {P}
 F162I1:
 MOV A, #F16MI1
-; Unsupported instruction ANA
-; Unsupported instruction JZ
-; Unsupported instruction INX
+AND D
+BEQ F
+ADD H
 F162I2:
-; Unsupported instruction DAD
-; Unsupported instruction XCHG
+ADD H
+; Error translating instruction XCHG
 SUB B, B, #1
-; Unsupported instruction JNZ
-; Unsupported instruction POP
+BNE F
+POP {P}
 ; Unsupported instruction RP
 NEG16:
-; Unsupported instruction CMA
+; Error translating instruction CMA
 MOV L, A
 MOV A, H
-; Unsupported instruction CMA
+; Error translating instruction CMA
 MOV H, A
-; Unsupported instruction INX
-BX LR
+ADD H
+; Unsupported instruction RET
 INTF16:
-; Unsupported instruction ORA
+ORR L
 ; Unsupported instruction RZ
-LDR B, =F16PCK
-; Unsupported instruction PUSH
+LDR R2, [ADR], STR R2, [DE] B, =F16PCK
+PUSH {B}
 MOV B, #('F16MB', '+', 'F16BIA', '-', '1')
 MOV D, #0
 MOV A, H
-; Unsupported instruction CPI
-; Unsupported instruction JC
+; Error translating instruction CPI
+BCS F
 MOV C, #('16', '-', 'F16MB', '+', '1')
 I2F161:
-; Unsupported instruction RLC
-; Unsupported instruction JNC
+; Error translating instruction RLC
+BCC I
 MOV A, B
-ADD C
+ADD C, C, #1
 MOV B, A
-; Unsupported instruction JMP
+B D
 STRINT:
-; Unsupported instruction XCHG
+; Error translating instruction XCHG
 S2I2:
 S2I1:
-; Unsupported instruction INX
-; Unsupported instruction ORA
+ADD D
+ORR A
 ; Unsupported instruction RZ
-; Unsupported instruction SUI
+SUB ', 0, '
 ; Unsupported instruction RC
-; Unsupported instruction CPI
+CMP 1, 0
 ; Unsupported instruction RNC
 SUB C, C, #1
-; Unsupported instruction JZ
-; Unsupported instruction PUSH
+BEQ S
+PUSH {B}
 MOV B, H
 MOV C, L
-; Unsupported instruction DAD
-; Unsupported instruction DAD
-; Unsupported instruction DAD
-; Unsupported instruction DAD
+ADD H
+ADD H
+ADD B
+ADD H
 MOV C, A
 MOV B, #0
-; Unsupported instruction DAD
-; Unsupported instruction POP
-; Unsupported instruction JMP
+ADD B
+POP {B}
+B S
 STRF16:
 BL S
-; Unsupported instruction PUSH
+PUSH {H}
 S2F162:
-; Unsupported instruction JNC
-; Unsupported instruction CPI
-; Unsupported instruction JNZ
-; Unsupported instruction XCHG
+BCC S
+CMP '.', -, '0'
+BNE S
+; Error translating instruction XCHG
 MOV C, #F16FDL
 BL S
 MOV A, #('F16FDL', '+', '1')
-SUB C
-; Unsupported instruction JZ
+SUB C, C, #1
+BEQ S
 MOV C, A
-; Unsupported instruction PUSH
+PUSH {B}
 BL I
-; Unsupported instruction XTHL
+; Error translating instruction XTHL
 MOV H, #0
-; Unsupported instruction DAD
-LDR D, =F16X10
-; Unsupported instruction DAD
+ADD H
+LDR R2, [ADR], STR R2, [DE] D, =F16X10
+ADD D
 MOV E, M
-; Unsupported instruction INX
+ADD H
 MOV D, M
-; Unsupported instruction POP
+POP {H}
 BL F
 S2F161:
 BL I
-; Unsupported instruction POP
-; Unsupported instruction JMP
+POP {D}
+B F
 INTSTR:
-; Unsupported instruction CPI
-; Unsupported instruction JZ
-LDR B, =('-', '10000')
+CMP ', 0, '
+BEQ F
+LDR R2, [ADR], STR R2, [DE] B, =('-', '10000')
 BL H
-LDR B, =('-', '1000')
+LDR R2, [ADR], STR R2, [DE] B, =('-', '1000')
 BL H
 FRAC3D:
 BL H
-LDR B, =('-', '10')
+LDR R2, [ADR], STR R2, [DE] B, =('-', '10')
 BL H
 MOV A, #'0'
-ADD L
-; Unsupported instruction STAX
-; Unsupported instruction INX
-; Unsupported instruction XRA
-; Unsupported instruction STAX
-; Unsupported instruction POP
-BX LR
+ADD L, L, #1
+STR A, [ADR] D
+ADD D
+EOR A
+STR A, [ADR] D
+POP {H}
+; Unsupported instruction RET
 HDIVB:
 MOV A, #("'0'", '-', '1')
 HDB1:
 ADD A, A, #1
-; Unsupported instruction JC
-; Unsupported instruction XTHL
-; Unsupported instruction CMP
-; Unsupported instruction JC
+BCS H
+; Error translating instruction XTHL
+CMP H, H, #1
+BCS H
 MOV H, #'0'
-; Unsupported instruction STAX
-; Unsupported instruction INX
+STR A, [ADR] D
+ADD D
 HDB2:
 MOV A, B
-; Unsupported instruction CMA
+; Error translating instruction CMA
 MOV B, A
 MOV A, C
-; Unsupported instruction CMA
+; Error translating instruction CMA
 MOV C, A
-; Unsupported instruction INX
-; Unsupported instruction DAD
-; Unsupported instruction POP
-BX LR
+ADD B
+ADD B
+POP {P}
+; Unsupported instruction RET
 FRAC1K:
 BL I
-; Unsupported instruction XCHG
-; Unsupported instruction POP
+; Error translating instruction XCHG
+POP {H}
 BL F
-; Unsupported instruction XCHG
-; Unsupported instruction LHLD
-; Unsupported instruction JMP
+; Error translating instruction XCHG
+LDR HL, [ADR] F16X10, +, 6
+B F
 F16STR:
-; Unsupported instruction ORA
-; Unsupported instruction JP
+ORR A
+B F
 MOV A, #'-'
-; Unsupported instruction STAX
-; Unsupported instruction INX
+STR A, [ADR] D
+ADD D
 BL F
 F16S1:
-LDR D, =F16_10
+LDR R2, [ADR], STR R2, [DE] D, =F16_10
 BL F
-; Unsupported instruction POP
-; Unsupported instruction PUSH
-; Unsupported instruction PUSH
-; Unsupported instruction PUSH
+POP {D}
+PUSH {P}
+PUSH {H}
+PUSH {D}
 BL F
-; Unsupported instruction POP
+POP {D}
 MOV A, #'1'
 BL I
 MOV A, #'.'
-; Unsupported instruction STAX
-; Unsupported instruction INX
-; Unsupported instruction XCHG
-; Unsupported instruction XTHL
-; Unsupported instruction XCHG
+STR A, [ADR] D
+ADD D
+; Error translating instruction XCHG
+; Error translating instruction XTHL
+; Error translating instruction XCHG
 BL F
-; Unsupported instruction POP
-; Unsupported instruction PUSH
-; Unsupported instruction PUSH
+POP {D}
+PUSH {H}
+PUSH {D}
 BL F
-; Unsupported instruction POP
+POP {D}
 MOV A, #'0'
 BL I
-; Unsupported instruction XCHG
-; Unsupported instruction XTHL
-; Unsupported instruction XCHG
+; Error translating instruction XCHG
+; Error translating instruction XTHL
+; Error translating instruction XCHG
 BL F
 BL F
-; Unsupported instruction POP
-; Unsupported instruction POP
-; Unsupported instruction JNC
+POP {D}
+POP {P}
+BCC F
 MOV A, #'0'
 BL I
 ; Directive DB 3, E, H
 F16S3:
 F16S2:
-; Unsupported instruction LDAX
-; Unsupported instruction SUI
-; Unsupported instruction JZ
-; Unsupported instruction SUI
-; Unsupported instruction JNZ
-; Unsupported instruction STAX
+LDR A, [ADR] D
+SUB ', 0, '
+BEQ F
+SUB '.', -, '0'
+BNE F
+STR A, [ADR] D
 F16S4:
-BX LR
+; Unsupported instruction RET
 A2F16:
 MOV B, #0
-LDR H, =A2F16T
-; Unsupported instruction DAD
+LDR R2, [ADR], STR R2, [DE] H, =A2F16T
+ADD B
 MOV A, M
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV H, A
 MOV A, B
-; Unsupported instruction RAR
+; Error translating instruction RAR
 MOV L, A
-BX LR
+; Unsupported instruction RET
 A2F16T:
 F16X10:
 BDSTR:
@@ -503,65 +503,65 @@ MOV A, L
 BL H
 MOV A, #' '
 BL C
-LDR D, =BUFFER
-; Unsupported instruction PUSH
+LDR R2, [ADR], STR R2, [DE] D, =BUFFER
+PUSH {D}
 BL F
 MOV A, #13
-; Unsupported instruction STAX
-; Unsupported instruction INX
+STR A, [ADR] D
+ADD D
 MOV A, #10
-; Unsupported instruction STAX
-; Unsupported instruction INX
+STR A, [ADR] D
+ADD D
 MOV A, #'$'
-; Unsupported instruction STAX
-; Unsupported instruction POP
+STR A, [ADR] D
+POP {D}
 MOV C, #9
-; Unsupported instruction JMP
+B B
 HEXBYTE:
-; Unsupported instruction RRC
-; Unsupported instruction RRC
-; Unsupported instruction RRC
-; Unsupported instruction RRC
+; Error translating instruction RRC
+; Error translating instruction RRC
+; Error translating instruction RRC
+; Error translating instruction RRC
 BL H
-; Unsupported instruction POP
+POP {P}
 HEXNBL:
-; Unsupported instruction ADI
-; Unsupported instruction CPI
-; Unsupported instruction JC
-; Unsupported instruction ADI
+ADD ', 0, '
+CMP ', :, '
+BCS C
+ADD 7
 CHR:
-; Unsupported instruction PUSH
-; Unsupported instruction PUSH
+PUSH {D}
+PUSH {H}
 MOV C, #2
 MOV E, A
 BL B
-; Unsupported instruction POP
-; Unsupported instruction POP
-; Unsupported instruction POP
-BX LR
+POP {H}
+POP {D}
+POP {B}
+; Unsupported instruction RET
 F16TST:
 BL S
 BL B
-LDR H, =STR_E
+LDR R2, [ADR], STR R2, [DE] H, =STR_E
 BL S
 BL B
-LDR H, =STR_42_5
+LDR R2, [ADR], STR R2, [DE] H, =STR_42_5
 BL S
 BL B
-LDR H, =STR_N
+LDR R2, [ADR], STR R2, [DE] H, =STR_N
 BL S
 BL B
-LDR H, =0400H
+LDR R2, [ADR], STR R2, [DE] H, =0400H
 BL B
-LDR H, =('F16_1', '-', '1')
+LDR R2, [ADR], STR R2, [DE] H, =('F16_1', '-', '1')
 BL B
-LDR H, =('F16_1', '+', '1')
+LDR R2, [ADR], STR R2, [DE] H, =('F16_1', '+', '1')
 BL B
-LDR H, =F16_1
-LDR D, =4200H
+LDR R2, [ADR], STR R2, [DE] H, =F16_1
+LDR R2, [ADR], STR R2, [DE] D, =4200H
 BL F
 BL B
-B .
+; Error translating instruction HLT
 STR_PI:
 STR_E:
 STR_42_5:
