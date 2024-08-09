@@ -15,8 +15,18 @@ Quite a bit, apparently. ***Transcendence*** has a meaning and itself is a backr
 This is an extremely complex dream and will probably never be fully actualized.  
 However I'm willing to try.__*</sup>
 
-# NOTE:
+# NOTE - AUG 8th/9th 2024:
 With the release of the Pico2 / RP2350, I will be switching over to utilize the M33 in the Pico2 rather than the M0+ in the Pico. 
+
+This change will happen because the instruction set has changed from Thumb-1 on the Pico/M0+ to Thumb-2 on the Pico2/M33. 
+
+This is a massive change if you worked with Thumb1/Thumb2. Thumb-1 has a limited set of instructions, while Thumb-2 extends this with more complex instructions similar to the full ARM instruction set.
+
+Thumb-2 will allow for much faster and overall better conversion of instruction set to instruction set. In fact many of the pitfalls and problems I've encountered with Thumb-1 can be rectified with the usage of Thumb-2.
+
+I was considering giving up on the Pico entirely because of Thumb-1. It's not really suited for this kind of project where as Thumb-2 more suits the level of complexity required.
+
+For what it's worth, I will probably leave this repo as-is, archive it, and create a fresh repo when I receive my Pico2.
 
 ## Overview
 Transcendence is a translation tool designed to convert Intel 8080 assembly language code into Arm M0+ assembly language, targeting platforms like the Raspberry Pi RP2040. The tool also aims to transpile PL/M language code into Arm M0+ assembly language, facilitating compatibility with older systems requiring CP/M operating systems or similar environments. Transcendence (for now) aims to bridge the gap between legacy various 8-Bit CPUs and PL/M codebases with modern Arm Cortex-M0+ platforms like the Raspberry Pi RP2040. By providing a reliable and efficient translation mechanism, it enables the preservation and utilization of vintage software while leveraging the capabilities of contemporary hardware.  
